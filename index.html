@@ -4,10 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Hello Bulma!</title>
+    
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css" />
@@ -15,22 +13,36 @@
       defer
       src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!-- <link rel="stylesheet" href="styles/debug.css"> -->
-    <!-- Uncomment this line to use the reset included  -->
-    <!-- <link rel="stylesheet" href="./assets/css/reset.css" /> -->
-
-    <!-- Add CSS Framework Link Here  -->
 
     <!-- Load fonts here -->
 
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
+  
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Hello World</h1>
-        <p class="subtitle">My first website with <strong>Bulma</strong>!</p>
-      </div>
-    </section>
+    
+    <header>
+      <!-- Contains logo in top left and search bar in top right. Containing div for recent search icon that javascript will create when there is-->
+      <img class="logo">
+      <submit class="search-bar"></submit>
+    </header>
+
+    <main>
+      <!-- map div from Google Maps -->
+      <div class="google-maps"></div>
+      
+
+      <section class="location-playlist">
+        <!-- playlists to generate in this spot -->
+        <!-- grab song data and put in UL -->
+        <!-- or embedded music player -->
+      </section>
+
+
+
+
+    </main>
+
 
     <!-- Add additional js libraries here  -->
     <script src="https://e-cdn-files.dzcdn.net/js/min/dz.js"></script>
