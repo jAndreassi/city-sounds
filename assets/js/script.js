@@ -28,6 +28,9 @@ function searchCountry(searchValue) {
 
 }
 
+// on page load, renders LocalStorage
+updateRecentSearches();
+
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
@@ -44,8 +47,6 @@ submitButton.addEventListener("click", function() {
 
 // event listener for recent search dropdown
 recentSearchesDropdown.addEventListener("click", function(event) {
-  // add an if statement to make event.target is the proper class
-  // this will need updating for our recent search schema
   var recentSearch = event.target.textContent;
   searchCountry(recentSearch);
 });
@@ -71,8 +72,8 @@ function addToLocalStorage(searchValue) {
   }
 }
 
-// To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called, which may be fine.
-// Should add a check to make sure that it's not currently in the local storage
+// To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
+// Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
 function updateRecentSearches() {
   recentSearchesDropdown.innerHTML = "";
   for (var i = 0; i < recentSearches.length; i++) {
