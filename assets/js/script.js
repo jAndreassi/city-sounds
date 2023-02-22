@@ -5,21 +5,75 @@
 
 // FUNCTIONS
 
-var searchBar = document.querySelector(".search-bar");
-var recentSearches = document.querySelector(".recent-searches");
 // maybe not exactly right, but something like this
-var countryName = searchBar.value;
+// var countryName = searchBar.value;
+
+var recentSearchesDropdown = document.querySelector(".recent-searches");
+var submitButton = document.querySelector(".button");
 
 
-// evaluate what we're listening for depending on if submit button or not. click may not be right
-searchBar.addEventListener("click", searchCountry);
+// submit button event listener for Enter
+searchBar.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    var searchValue = event.target.value.trim();
+    if (searchValue.length > 0) {
+      // Save search to local storage
+      var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+      recentSearches.unshift(searchValue);
+      localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
 
+       // Update recent searches dropdown
+       updateRecentSearches(recentSearches);
+
+       // Move map to searched location
+       googleMapZoom(searchValue);
+
+       // Query Deezer for playlist associated with country and render on page
+       fetchAndRenderPlaylist(searchValue);
+    }
+  }
+});
+
+// submit button eventlistener for click
+submitButton.addEventListener("click", function(event) {
+  var searchValue = searchBar.value.trim();
+  if (searchValue.length > 0) {
+    // Save search to local storage
+    var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+    recentSearches.unshift(searchValue);
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+
+    // Update recent searches dropdown
+    updateRecentSearches(recentSearches);
+
+    // Move map to searched location
+    googleMapZoom(searchValue);
+
+    // Query Deezer for playlist associated with country and render on page
+    fetchAndRenderPlaylist(searchValue);
+  }
+});
+
+// event listener for recent search dropdown
 recentSearches.addEventListener("click", function(event) {
   // add an if statement to make event.target is the proper class
   // this will need updating for our recent search schema
   var recentSearch = event.target.textContent;
   searchCountry(recentSearch);
 });
+
+function updateRecentSearches(recentSearches) {
+  recentSearchesDropdown.innerHTML = "";
+  for (var i = 0; i < recentSearches.length; i++) {
+    var listItem = document.createElement("a");
+    listItem.classList.add("dropdown-item");
+    listItem.textContent = recentSearches[i];
+    recentSearchesDropdown.appendChild(listItem);
+  }
+}
+
+
+
 
 // function to detect if local storage exists and to populate recent searches if so
 function checkAndDisplayRecentSearches() {
@@ -46,7 +100,6 @@ function searchCountry(countryName) {
 
   // adds new localStorage to dropDown
   renderNewestLocalStorage();
-
 
 }
 
