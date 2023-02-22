@@ -29,8 +29,35 @@
             <img class="logo" src="./assets/images/city-sounds.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="250" height="90">
             <!-- search input -->
             <input class="input search-bar is-rounded" type="text" placeholder="Search Country">
+              
             <!-- search button -->
             <button class="button">Search</button>
+
+            <div class="dropdown is-active">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                  <span>Recent Searches</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                <div class="dropdown-content">
+                  <div class="dropdown-item">
+                    <p>Add buttons for recent searches from localStorage? <strong>-</strong>-</p>
+                  </div>
+                  <hr class="dropdown-divider">
+                  <div class="dropdown-item">
+                    <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
+                  </div>
+                  <hr class="dropdown-divider">
+                  <a href="#" class="dropdown-item">
+                    This is a link in case we wanted to add one
+                  </a>
+                </div>
+              </div>
+            </div>
           </a>
       
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
