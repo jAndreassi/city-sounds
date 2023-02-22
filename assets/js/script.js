@@ -69,7 +69,8 @@ function renderNewestLocalStorage () {
 
   // Testing Deezer API
 
-var deezerPlaylistURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists";
+var deezerPlaylistURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100";
+var countryArr = [];
 
 fetch(deezerPlaylistURL)
   .then(function(response) {
@@ -77,6 +78,11 @@ fetch(deezerPlaylistURL)
   })
   .then(function(data) {
     console.log(data);
+    console.log(data.data[0].title);
+    for (i = 0; i < data.data.length; i++) {
+      countryArr.unshift(data.data[i].title);
+    }
+    console.log(countryArr);
   });
 
 function fetchAndRenderPlaylist(countryName) {
