@@ -67,12 +67,26 @@ function renderNewestLocalStorage () {
 
   // Deezer
 
-  // Testing Deezer API
-// b
-var deezerPlaylistURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100";
+// CORS Proxy Server Using Rapid API
+deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
+
+const encodedParams = new URLSearchParams();
+encodedParams.append("my-url", deezerPlaylistUrl);
+
+const options = {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/x-www-form-urlencoded',
+    'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
+    'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
+  },
+  body: encodedParams
+};
+
+// getting Array of countries 
 var countryArr = [];
 
-fetch(deezerPlaylistURL)
+fetch('https://cors-proxy3.p.rapidapi.com/api', options)
   .then(function(response) {
     return response.json();
   })
