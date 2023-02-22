@@ -12,7 +12,7 @@ var countryName = searchBar.value;
 
 
 // evaluate what we're listening for depending on if submit button or not. click may not be right
-searchBar.addEventListener("click", searchCountry);
+// searchBar.addEventListener("click", searchCountry);
 
 recentSearches.addEventListener("click", function(event) {
   // add an if statement to make event.target is the proper class
