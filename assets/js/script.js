@@ -5,7 +5,6 @@
 
 // FUNCTIONS
 
-<<<<<<< HEAD
 // maybe not exactly right, but something like this
 // var countryName = searchBar.value;
 
@@ -70,58 +69,12 @@ function addToLocalStorage(searchValue) {
     // Save search to local storage
     recentSearches.unshift(searchValue);
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-=======
-var searchBar = document.querySelector(".search-bar");
-var recentSearchesDropdown = document.querySelector(".recent-searches");
-var submitButton = document.querySelector(".button");
-
-searchBar.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    var searchValue = event.target.value.trim();
-    if (searchValue.length > 0) {
-      // Save search to local storage
-      var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-      recentSearches.unshift(searchValue);
-      localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-      
-       // Update recent searches dropdown
-       updateRecentSearches(recentSearches);
-      
-       // Move map to searched location
-       googleMapZoom(searchValue);
-       
-       // Query Deezer for playlist associated with country and render on page
-       fetchAndRenderPlaylist(searchValue);
-    }
->>>>>>> 73ba7ef77ac4eb610f4bb42618914f1271605751
   }
 });
 
-<<<<<<< HEAD
 // To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
 // Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
 function updateRecentSearches() {
-=======
-submitButton.addEventListener("click", function(event) {
-  var searchValue = searchBar.value.trim();
-  if (searchValue.length > 0) {
-    // Save search to local storage
-    var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-    recentSearches.unshift(searchValue);
-    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-      
-    // Update recent searches dropdown
-    updateRecentSearches(recentSearches);
-      
-    // Move map to searched location
-    googleMapZoom(searchValue);
-       
-    // Query Deezer for playlist associated with country and render on page
-    fetchAndRenderPlaylist(searchValue);
-  }
-});
-function updateRecentSearches(recentSearches) {
->>>>>>> 73ba7ef77ac4eb610f4bb42618914f1271605751
   recentSearchesDropdown.innerHTML = "";
   for (var i = 0; i < recentSearches.length; i++) {
     var listItem = document.createElement("a");
@@ -130,11 +83,8 @@ function updateRecentSearches(recentSearches) {
     recentSearchesDropdown.appendChild(listItem);
   }
 }
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 73ba7ef77ac4eb610f4bb42618914f1271605751
 // API GRABS
 
   // Deezer
