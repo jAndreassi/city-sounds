@@ -16,10 +16,28 @@ searchBar.addEventListener("keydown", function(event) {
       var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
       recentSearches.unshift(searchValue);
       localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+      
+       // Update recent searches dropdown
+       updateRecentSearches(recentSearches);
+      
+       // Move map to searched location
+       googleMapZoom(searchValue);
+       
+       // Query Deezer for playlist associated with country and render on page
+       fetchAndRenderPlaylist(searchValue);
     }
   }
 });
 
+function updateRecentSearches(recentSearches) {
+  recentSearchesDropdown.innerHTML = "";
+  for (var i = 0; i < recentSearches.length; i++) {
+    var listItem = document.createElement("a");
+    listItem.classList.add("dropdown-item");
+    listItem.textContent = recentSearches[i];
+    recentSearchesDropdown.appendChild(listItem);
+  }
+}
 // API GRABS
 
   // Deezer
