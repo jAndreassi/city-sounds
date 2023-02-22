@@ -21,14 +21,16 @@
   
   <body>
     
-      <input class="input is-rounded" type="text" placeholder="Search Country">
-    
     <header>
       <!-- Contains logo in top left and search bar in top right. Containing div for recent search icon that javascript will create when there is-->
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <a class="navbar-item" href="https://bulma.io">
-            <img class="logo" src="./assets/images/city-sounds.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="150" height="50">
+            <img class="logo" src="./assets/images/city-sounds.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="250" height="90">
+            <!-- search input -->
+            <input class="input search-bar is-rounded" type="text" placeholder="Search Country">
+            <!-- search button -->
+            <button class="button">Search</button>
           </a>
       
           <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -39,8 +41,6 @@
         </div>
       </nav>
       
-
-      <submit class="search-bar"></submit>
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
     </header>
