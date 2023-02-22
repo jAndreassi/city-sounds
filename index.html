@@ -13,27 +13,14 @@
       defer
       src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!-- <link rel="stylesheet" href="styles/debug.css"> -->
-
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Load fonts here -->
 
     <!-- loads map here, still need to work on size -->
-
-    <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-    </style>
-
     <link
       rel="stylesheet"
       href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
     <script src="https://js.arcgis.com/4.25/"></script>
-
     <script>
       require(["esri/config", "esri/Map", "esri/views/MapView"], function (
         esriConfig,
@@ -42,21 +29,17 @@
       ) {
         esriConfig.apiKey =
           "AAPK671f1236660d446a969d72c1b0cdf3b2NY59jDGAQPR0vJMg3egK-6jdCpNXpvhO4dux1Dlin1MvGsQsFBTHO-QoCZN8MS65";
-
         const map = new Map({
           basemap: "arcgis-topographic", // Basemap layer service
         });
-
         const view = new MapView({
           map: map,
           center: [-118.805, 34.027], // Longitude, latitude
-          zoom: 13, // Zoom level
+          zoom: 2, // Zoom level
           container: "viewDiv", // Div element
         });
       });
-    </script>
-
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    </script> 
   </head>
 
   <body>
@@ -121,10 +104,12 @@
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
     </header>
-    <div id="viewDiv"></div>
+
     <main>
       <!-- map div from Google Maps -->
-      <div class="google-maps"></div>
+      <div id="map-container" class="width-80">
+        <div id="viewDiv"></div>
+      </div>
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
