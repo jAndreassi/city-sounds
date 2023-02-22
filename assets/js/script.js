@@ -68,7 +68,7 @@ function renderNewestLocalStorage () {
   // Deezer
 
   // Testing Deezer API
-
+// b
 var deezerPlaylistURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100";
 var countryArr = [];
 
@@ -77,10 +77,15 @@ fetch(deezerPlaylistURL)
     return response.json();
   })
   .then(function(data) {
-    console.log(data);
-    console.log(data.data[0].title);
+    playlistArr = [];
     for (i = 0; i < data.data.length; i++) {
-      countryArr.unshift(data.data[i].title);
+      var playlistName = data.data[i].title;
+      if (playlistName.includes("Songcatcher") !== true && playlistName.includes("SongCatcher") !== true && playlistName.includes("Worldwide") !== true && playlistName.includes("Top")) {
+        playlistArr.unshift(playlistName)
+      }
+    }
+    for (z = 0; z < playlistArr.length; z++) {
+      countryArr.unshift(playlistArr[z].split(" ")[1]);
     }
     console.log(countryArr);
   });
