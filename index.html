@@ -25,7 +25,21 @@
     
     <header>
       <!-- Contains logo in top left and search bar in top right. Containing div for recent search icon that javascript will create when there is-->
-      <img class="logo">
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img class="logo" src="./assets/images/city-sounds.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="150" height="50">
+          </a>
+      
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+      </nav>
+      
+
       <submit class="search-bar"></submit>
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
