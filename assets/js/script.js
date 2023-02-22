@@ -7,6 +7,7 @@
 
 var searchBar = document.querySelector(".search-bar");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
+var submitButton = document.querySelector(".button");
 
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
