@@ -67,16 +67,41 @@ function renderNewestLocalStorage () {
 
   // Deezer
 
-  // Testing Deezer API
+// CORS Proxy Server Using Rapid API
+deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
 
-var deezerPlaylistURL = "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists";
+const encodedParams = new URLSearchParams();
+encodedParams.append("my-url", deezerPlaylistUrl);
 
-fetch(deezerPlaylistURL)
+const options = {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/x-www-form-urlencoded',
+    'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
+    'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
+  },
+  body: encodedParams
+};
+
+// getting Array of countries 
+var countryArr = [];
+
+fetch('https://cors-proxy3.p.rapidapi.com/api', options)
   .then(function(response) {
     return response.json();
   })
   .then(function(data) {
-    console.log(data);
+    playlistArr = [];
+    for (i = 0; i < data.data.length; i++) {
+      var playlistName = data.data[i].title;
+      if (playlistName.includes("Songcatcher") !== true && playlistName.includes("SongCatcher") !== true && playlistName.includes("Worldwide") !== true && playlistName.includes("Top")) {
+        playlistArr.unshift(playlistName)
+      }
+    }
+    for (z = 0; z < playlistArr.length; z++) {
+      countryArr.unshift(playlistArr[z].split(" ")[1]);
+    }
+    console.log(countryArr);
   });
 
 function fetchAndRenderPlaylist(countryName) {
