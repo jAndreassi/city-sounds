@@ -8,61 +8,72 @@
 // maybe not exactly right, but something like this
 // var countryName = searchBar.value;
 
+var searchBar = document.querySelector(".search-bar");
+var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
-var submitButton = document.querySelector(".button");
+var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
+function searchCountry(searchValue) {
+  // // move Map to queried country
+  // mapZoom(searchValue);
+
+  // // query Deezer for playlist associated with country and render on page
+  // fetchAndRenderPlaylist(searchValue);
+
+  // save query to local storage
+  addToLocalStorage(searchValue);
+
+  // adds new localStorage to dropDown
+  updateRecentSearches();
+
+}
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
     var searchValue = event.target.value.trim();
-    if (searchValue.length > 0) {
-      // Save search to local storage
-      var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-      recentSearches.unshift(searchValue);
-      localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-
-       // Update recent searches dropdown
-       updateRecentSearches(recentSearches);
-
-       // Move map to searched location
-       googleMapZoom(searchValue);
-
-       // Query Deezer for playlist associated with country and render on page
-       fetchAndRenderPlaylist(searchValue);
-    }
+    searchCountry(searchValue);
   }
 });
 
 // submit button eventlistener for click
-submitButton.addEventListener("click", function(event) {
+submitButton.addEventListener("click", function() {
   var searchValue = searchBar.value.trim();
-  if (searchValue.length > 0) {
-    // Save search to local storage
-    var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-    recentSearches.unshift(searchValue);
-    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-
-    // Update recent searches dropdown
-    updateRecentSearches(recentSearches);
-
-    // Move map to searched location
-    googleMapZoom(searchValue);
-
-    // Query Deezer for playlist associated with country and render on page
-    fetchAndRenderPlaylist(searchValue);
-  }
-});
+  searchCountry(searchValue);
+  });
 
 // event listener for recent search dropdown
-recentSearches.addEventListener("click", function(event) {
+recentSearchesDropdown.addEventListener("click", function(event) {
   // add an if statement to make event.target is the proper class
   // this will need updating for our recent search schema
   var recentSearch = event.target.textContent;
   searchCountry(recentSearch);
 });
 
-function updateRecentSearches(recentSearches) {
+
+// to be defined
+function mapZoom(searchValue) {
+  console.log(searchValue);
+}
+
+// to be defined
+function fetchAndRenderPlaylist(searchValue) {
+  console.log(searchValue);
+}
+
+
+// adds searchValues to localStorage
+function addToLocalStorage(searchValue) {
+  if (searchValue.length > 0) {
+    // Save search to local storage
+    recentSearches.unshift(searchValue);
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+  }
+}
+
+// To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called, which may be fine.
+// Should add a check to make sure that it's not currently in the local storage
+function updateRecentSearches() {
   recentSearchesDropdown.innerHTML = "";
   for (var i = 0; i < recentSearches.length; i++) {
     var listItem = document.createElement("a");
@@ -72,49 +83,6 @@ function updateRecentSearches(recentSearches) {
   }
 }
 
-
-
-
-// function to detect if local storage exists and to populate recent searches if so
-function checkAndDisplayRecentSearches() {
-  var localStorage = JSON.parse(localStorage.getItem("recentSearches"));
-  if (localStorage !== null) {
-    // render recent search dropdown and put on page
-    // if dropdowns just take an array as an argument, then don't need for loop, just need to get array for it
-    for (i = 0; i < localStorage.length; i++ ) {
-      // display each part of the localStorage in dropdown
-    }
-  }
-}
-
-function searchCountry(countryName) {
-  // move Google Map to queried country
-  googleMapZoom(countryName);
-
-  // query Deezer for playlist associated with country and render on page
-  fetchAndRenderPlaylist(countryName);
-
-
-  // save query to local storage
-  saveLocalStorage(countryName);
-
-  // adds new localStorage to dropDown
-  renderNewestLocalStorage();
-
-}
-
-function saveLocalStorage(countryName) {
-
-}
-
-function renderNewestLocalStorage () {
-  var localStorage = JSON.parse(localStorage.getItem("recentSearches"));
-  if (localStorage === null) { 
-    checkAndDisplayRecentSearches();
-  } else {
-    // display only most recent addition (adding to the array and rendering
-  }
-}
 
 // API GRABS
 
@@ -157,19 +125,12 @@ fetch('https://cors-proxy3.p.rapidapi.com/api', options)
     console.log(countryArr);
   });
 
-function fetchAndRenderPlaylist(countryName) {
+// Map API
 
-}
+  //  Map to Display
 
-// Google
+  //  Maps Markers
 
-  // Google Maps to Display
-
-  // Google Maps Markers
-
-function googleMapZoom(countryName) {
-
-}
   
   
   
