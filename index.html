@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>City Sounds</title>
-    
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.0/css/bulma.min.css" />
@@ -16,54 +16,126 @@
 
     <!-- Load fonts here -->
 
+    <!-- loads map here, still need to work on size -->
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.25/"></script>
+
+    <script>
+      require(["esri/config", "esri/Map", "esri/views/MapView"], function (
+        esriConfig,
+        Map,
+        MapView
+      ) {
+        esriConfig.apiKey =
+          "AAPK671f1236660d446a969d72c1b0cdf3b2NY59jDGAQPR0vJMg3egK-6jdCpNXpvhO4dux1Dlin1MvGsQsFBTHO-QoCZN8MS65";
+
+        const map = new Map({
+          basemap: "arcgis-topographic", // Basemap layer service
+        });
+
+        const view = new MapView({
+          map: map,
+          center: [-118.805, 34.027], // Longitude, latitude
+          zoom: 13, // Zoom level
+          container: "viewDiv", // Div element
+        });
+      });
+    </script>
+
     <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
-  
+
   <body>
-    
     <header>
       <!-- Contains logo in top left and search bar in top right. Containing div for recent search icon that javascript will create when there is-->
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <a class="navbar-item">
-            <img class="logo" src="./assets/images/city-sounds.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="250" height="90">
+            <img
+              class="logo"
+              src="./assets/images/city-sounds.png"
+              alt="Bulma: Free, open source, and modern CSS framework based on Flexbox"
+              width="250"
+              height="90" />
             <!-- search input -->
-            <input class="input search-bar is-rounded" type="text" placeholder="Search Country">
+            <input
+              class="input search-bar is-rounded"
+              type="text"
+              placeholder="Search Country" />
             <!-- search button -->
             <button class="button">Search</button>
+
+            <div class="dropdown is-active">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                  <span>Recent Searches</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                <div class="dropdown-content">
+                  <div class="dropdown-item">
+                    <p>Add buttons for recent searches from localStorage? <strong>-</strong>-</p>
+                  </div>
+                  <hr class="dropdown-divider">
+                  <div class="dropdown-item">
+                    <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
+                  </div>
+                  <hr class="dropdown-divider">
+                  <a href="#" class="dropdown-item">
+                    This is a link in case we wanted to add one
+                  </a>
+                </div>
+              </div>
+            </div>
           </a>
-      
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
       </nav>
-      
+
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
     </header>
-
+    <div id="viewDiv"></div>
     <main>
       <!-- map div from Google Maps -->
       <div class="google-maps"></div>
-      
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
         <!-- grab song data and put in UL -->
         <!-- or embedded music player -->
       </section>
-
-
-
-
     </main>
 
-
     <!-- Add additional js libraries here  -->
-    <script src="https://e-cdn-files.dzcdn.net/js/min/dz.js"></script>
+    <!-- map only works without deezer library -->
+    <!-- <script src="https://e-cdn-files.dzcdn.net/js/min/dz.js"></script> -->
     <script src="./assets/js/script.js"></script>
   </body>
 </html>
