@@ -20,34 +20,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai&display=swap" rel="stylesheet">
 
     <!-- loads map here, still need to work on size -->
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
-    <script src="https://js.arcgis.com/4.25/"></script>
-    <script>
-      require(["esri/config", "esri/Map", "esri/views/MapView"], function (
-        esriConfig,
-        Map,
-        MapView
-      ) {
-        esriConfig.apiKey =
-          "AAPK671f1236660d446a969d72c1b0cdf3b2NY59jDGAQPR0vJMg3egK-6jdCpNXpvhO4dux1Dlin1MvGsQsFBTHO-QoCZN8MS65";
-        const map = new Map({
-          basemap: "arcgis-topographic", // Basemap layer service
-        });
-        const view = new MapView({
-          map: map,
-          container: "viewDiv", // Div element
-          center: [-118.805, 34.027], // Longitude, latitude
-          zoom: 2, // Zoom level
-          constraints: { // disables zoom
-          minZoom: 2,
-          maxZoom: 2
-          }
-        });
-        view.ui.remove("zoom") // removes zoom buttons
-      });
-    </script>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.26/"></script>
   </head>
 
   <body>
