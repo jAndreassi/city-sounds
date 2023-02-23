@@ -259,13 +259,36 @@ function generateCountryArr() {
     "esri/widgets/LayerList",
     "esri/core/Collection"
   ], (Map, SceneView, FeatureLayer, LayerList, Collection) => {
+    // const featureLayer = new FeatureLayer({
+    //   outFields: ["STATION_NAME", "COUNTRY", "TEMP"],
+    //   portalItem: {
+    //     // autocasts as new PortalItem()
+    //     id: "3a177da3f6524d61980fb41125b2349c"
+    //   },
+    //   title: "Temperature on Jan, 4, 2017"
+    // });
+
+    let features = [
+      {
+        geometry: {
+          type: "point",
+          x: -100,
+          y: 38
+        },
+        attributes: {
+          ObjectID: 1,
+          DepArpt: "KATL",
+          MsgTime: Date.now(),
+          FltId: "UAL1"
+        }
+      },
+     ];
+
     const featureLayer = new FeatureLayer({
       outFields: ["STATION_NAME", "COUNTRY", "TEMP"],
-      portalItem: {
-        // autocasts as new PortalItem()
-        id: "3a177da3f6524d61980fb41125b2349c"
-      },
-      title: "Temperature on Jan, 4, 2017"
+      source: features,
+      objectIdField: "ObjectID",
+      title: "Global Top Charts"
     });
 
     // When the layer is loaded, query for the extent
@@ -280,19 +303,22 @@ function generateCountryArr() {
 
     const map = new Map({
       basemap: "dark-gray-vector",
-      layers: [featureLayer]
+      layers: [featureLayer], // dots layer
     });
 
     const view = new SceneView({
       container: "viewDiv",
-      map: map
+      map: map,
+      ui: {
+        components: ["attribution"]
+      }
     });
 
     const layerList = new LayerList({ // widget top right handler
       view: view,
       listItemCreatedFunction: createActions
     });
-    view.ui.add(layerList, "top-right");
+    // view.ui.add(layerList, "top-right");
 
     // definitionExpressions used by each action
     // listed in the LayerList
@@ -346,7 +372,7 @@ function generateCountryArr() {
       zoomToLayer(layer);
     });
 
-    function createActions(event) { // widget top right info
+    function createActions(event) { // widget top right action
       const item = event.item;
 
       item.actionsOpen = true;
@@ -409,7 +435,7 @@ function generateCountryArr() {
         "STATION_NAME = 'Eareckson/Shemya' OR " +
         "COUNTRY LIKE '%Guam%' )";
 
-      return subExpression ? baseExpression + " AND (" + subExpression + ")" : baseExpression;
+      return subExpression ? baseExpression + " AND (" + subExpression + ")" : baseExpression; // use this to focus on selected country
     }
 
     // Zooms to the extent of the layer as defined by
