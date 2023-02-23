@@ -290,14 +290,6 @@ function generateCountryArrays() {
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
   ], (Map, SceneView, FeatureLayer) => {
-    // const featureLayer = new FeatureLayer({
-    //   outFields: ["STATION_NAME", "COUNTRY", "TEMP"],
-    //   portalItem: {
-    //     // autocasts as new PortalItem()
-    //     id: "3a177da3f6524d61980fb41125b2349c"
-    //   },
-    //   title: "Temperature on Jan, 4, 2017"
-    // });
 
     const data = [
       {
@@ -335,12 +327,40 @@ function generateCountryArrays() {
                 family: "CalciteWebCoreIcons"
             }
         }
-    },
+      },
+      // popupTemplate: {
+      //   title: "{name}",
+      //   content: [
+      //       {
+      //           type: "fields",
+      //           fieldInfos: [
+      //               {
+      //                   fieldName: "addrs",
+      //                   label: "Address"
+      //               },
+      //               {
+      //                   fieldName: "lat",
+      //                   label: "Latitude",
+      //                   format: {
+      //                       places: 2
+      //                   }
+      //               },
+      //               {
+      //                   fieldName: "lon",
+      //                   label: "Longitude",
+      //                   format: {
+      //                       places: 2
+      //                   }
+      //               }
+      //           ]
+      //       },
+      //   ],
+      // }
     });
 
     const map = new Map({
       basemap: "dark-gray-vector",
-      layers: [featureLayer], // dots layer
+      layers: [featureLayer], // loads layer with all of the markers
     });
 
     const view = new SceneView({
@@ -351,12 +371,8 @@ function generateCountryArrays() {
         components: ["attribution"]
       }
     });
+    view.ui._removeComponents(["attribution"]); // removes footer
   });
-
-  //  Maps Markers
-
-  
-  
   
   // USER INTERACTIONS
     // search bar – event listener

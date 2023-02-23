@@ -15,6 +15,10 @@ main,
     height: 60%;
     margin-top: 20px;
 }
+
+.esriAttribution {
+    display: none;
+}
 /*  */
 
 .chart-title {
