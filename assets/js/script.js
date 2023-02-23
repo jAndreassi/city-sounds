@@ -12,6 +12,8 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+var countryArr = [];
+
 
 function searchCountry(searchValue) {
   // // move Map to queried country
@@ -30,6 +32,9 @@ function searchCountry(searchValue) {
 
 // on page load, renders LocalStorage
 updateRecentSearches();
+
+// on page load, either fetches from Deezer API, or stores its object in sessionStorage. Also creates countryArr
+countryArrFromDeezer();
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
@@ -108,9 +113,7 @@ function updateRecentSearches() {
 // };
 
 // getting Array of countries 
-var countryArr = [];
 
-countryArrFromDeezer();
 
 // fetch('https://cors-proxy3.p.rapidapi.com/api', options)
 function checkDeezerStorage() {
@@ -137,8 +140,11 @@ function countryArrFromDeezer() {
       playlistArr.unshift(playlistName)
     }
   }
-  for (z = 0; z < playlistArr.length; z++) {
-    countryArr.unshift(playlistArr[z].split(" ")[1]);
+  for (let i =0; i < playlistArr.length; i++) {
+    var name = playlistArr[i];
+    if (name.startsWith("Top ")) {
+      countryArr.unshift(name.substring(4));
+    }
   }
   console.log(countryArr);
 }
