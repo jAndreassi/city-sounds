@@ -13,7 +13,7 @@
       defer
       src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
     <!-- <link rel="stylesheet" href="styles/debug.css"> -->
-
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Load fonts here -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,55 +22,10 @@
       rel="stylesheet" />
 
     <!-- loads map here, still need to work on size -->
-
-    <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-    </style>
-
     <link
       rel="stylesheet"
-      href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
-    <script src="https://js.arcgis.com/4.25/"></script>
-    <<<<<<< Updated upstream
-
-    <script>
-      require(["esri/config", "esri/Map", "esri/views/MapView"], function (
-        esriConfig,
-        Map,
-        MapView
-      ) {
-        esriConfig.apiKey =
-          "AAPK671f1236660d446a969d72c1b0cdf3b2NY59jDGAQPR0vJMg3egK-6jdCpNXpvhO4dux1Dlin1MvGsQsFBTHO-QoCZN8MS65";
-
-        const map = new Map({
-          basemap: "arcgis-topographic", // Basemap layer service
-        });
-
-        const view = new MapView({
-          map: map,
-          center: [-118.805, 34.027], // Longitude, latitude
-          zoom: 13, // Zoom level
-          container: "viewDiv", // Div element
-        });
-      });
-    </script>
-
-    <!-- google fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Hind+Madurai&display=swap"
-      rel="stylesheet" />
-
-    <link rel="stylesheet" href="./assets/css/style.css" />
-    ======= >>>>>>> Stashed changes
+      href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.26/"></script>
   </head>
 
   <body>
@@ -93,7 +48,9 @@
               <input
                 class="input search-bar is-rounded"
                 type="text"
-                placeholder="Find song by country" />
+                placeholder="Find song by country"
+                list="countryList" />
+              <datalist id="countryList"></datalist>
             </div>
             <div class="control">
               <a class="button submit-btn is-rounded is-info"> Search </a>
@@ -150,10 +107,12 @@
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
     </header>
-    <div id="viewDiv"></div>
+
     <main>
       <!-- map div from Google Maps -->
-      <div class="google-maps"></div>
+      <div id="map-container" class="width-80">
+        <div id="viewDiv"></div>
+      </div>
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
