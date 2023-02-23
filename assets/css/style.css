@@ -1,3 +1,16 @@
 .control {
     padding-top: 8px;
 }
+
+/* .dropdown {
+    padding-top: 8px;
+
+} */
+
+:root {
+    --custom-font: 'Hind Madurai', sans-serif;
+}
+
+* {
+    font-family: var(--custom-font);
+}
