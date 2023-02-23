@@ -24,16 +24,15 @@ var countries = [
 ];
 
 var countryArr = [];
+var countryIdArr = [];
 
 window.onload = function() {
   // on page load, renders LocalStorage
   updateRecentSearches();
 
-  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr
+  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
 
-  // generates paired country to ID
-  generateCountrIdObjArr()
 }
 
 function searchCountry(searchValue) {
@@ -182,79 +181,42 @@ function saveDeezerObjAndCountryArr() {
         sessionStorage.setItem("deezerObject", JSON.stringify(data));
       })
       .then(function(){
-        generateCountryArr();
+        generateCountryArrays();
       })
   } else {
-    generateCountryArr();
+    generateCountryArrays();
   }
 }
-      
-function generateCountryArr() {
+
+function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   console.log(deezerObject);
   console.log(deezerObject.data);
-  playlistArr = [];
+  var playlistArr = [];
+  var playlistId = [];
   for (i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
       playlistArr.unshift(playlistName)
+      playlistId.unshift(deezerObject.data[i].id);
+      console.log(playlistArr);
+      console.log(playlistId);
     }
   }
-  for (let i =0; i < playlistArr.length; i++) {
+  for (let i = 0; i < playlistArr.length; i++) {
     var name = playlistArr[i];
     if (name.startsWith("Top ")) {
-      countryArr.unshift(name.substring(4));
+      countryArr.push(name.substring(4));
     }
   }
   console.log(countryArr);
-}
-
-var countryIdArr = [];
-
-function generateCountrIdObjArr() {
-  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  console.log(deezerObject);
-  console.log(deezerObject.data);
-  playlistArr = [];
-  for (i = 0; i < deezerObject.data.length; i++) {
-    var playlistName = deezerObject.data[i].title;
-    if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
-      playlistArr.unshift(playlistName)
-    }
-  }
-  for (let i =0; i < playlistArr.length; i++) {
-    var name = playlistArr[i];
-    if (name.startsWith("Top ")) {
-      var countryName = name.substring(4);
-      countryIdArr.unshift({[countryName]: deezerObject.data[i].id})
-    }
+  for (let z = 0; z < countryArr.length; z++) {
+    var countryIdObj = {"country": countryArr[z], "id": playlistId[z]};
+    countryIdArr.push(countryIdObj);
   }
   console.log(countryIdArr);
 }
 
- 
-
-
-// function countryArrFromDeezer() {
-//   checkDeezerStorage();
-//   var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-//   console.log(deezerObject);
-//   console.log(deezerObject.data);
-//   playlistArr = [];
-//   for (i = 0; i < deezerObject.data.length; i++) {
-//     var playlistName = deezerObject.data[i].title;
-//     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
-//       playlistArr.unshift(playlistName)
-//     }
-//   }
-//   for (let i =0; i < playlistArr.length; i++) {
-//     var name = playlistArr[i];
-//     if (name.startsWith("Top ")) {
-//       countryArr.unshift(name.substring(4));
-//     }
-//   }
-//   console.log(countryArr);
-// }
 
 // Map API
 
