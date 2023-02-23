@@ -162,10 +162,10 @@ function fetchAndRenderPlaylist(searchValue) {
         var tdLink = document.createElement("td");
         tdLink.setAttribute("class", "song-link");
         
-        tdName.innerHTML = `${songName}<td>`
-        tdLength.innerHTML = `${songLength}<td>`
-        tdArtist.innerHTML = `${songArtist}<td>`
-        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a></td></tr>`
+        tdName.innerHTML = `${songName}`
+        tdLength.innerHTML = `${songLength}`
+        tdArtist.innerHTML = `${songArtist}`
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a>`
 
 
         playlistChart.appendChild(tr);
