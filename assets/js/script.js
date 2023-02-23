@@ -12,37 +12,39 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-var countries = [
-  "Japan",
-  "Germany",
-  "Russia",
-  "China",
-  "Colombia",
-  "America",
-  "Poland",
-  "Nigeria"
-];
+// var countries = [
+//   "Japan",
+//   "Germany",
+//   "Russia",
+//   "China",
+//   "Colombia",
+//   "America",
+//   "Poland",
+//   "Nigeria"
+// ];
 
 var countryArr = [];
+var countryIdArr = [];
 
 window.onload = function() {
   // on page load, renders LocalStorage
   updateRecentSearches();
 
-  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr
+  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
+
 }
 
 function searchCountry(searchValue) {
   // check if the search value is valid
-  if (!searchValue || !countries.includes(searchValue)) {
+  if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
   // // move Map to queried country
   // mapZoom(searchValue);
 
   // // query Deezer for playlist associated with country and render on page
-  // fetchAndRenderPlaylist(searchValue);
+  fetchAndRenderPlaylist(searchValue);
 
   // save query to local storage
   addToLocalStorage(searchValue);
@@ -54,10 +56,10 @@ function searchCountry(searchValue) {
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
-// // create datalist element with countries
-// for (var i = 0; i < countries.length; i++) {
+// // create datalist element with countryArr
+// for (var i = 0; i < countryArr.length; i++) {
 //   var option = document.createElement("option");
-//   option.value = countries[i];
+//   option.value = countryArr[i];
 //   countryList.appendChild(option);
 // }
 
@@ -69,7 +71,7 @@ searchBar.addEventListener("input", function(event) {
   var searchValue = event.target.value.trim().toLowerCase();
   if (searchValue.length >= 3) {
     // filter countries by search value
-    var filteredCountries = countries.filter(function(country) {
+    var filteredCountries = countryArr.filter(function(country) {
       return country.toLowerCase().startsWith(searchValue);
     });
     countryList.innerHTML = "";
@@ -89,28 +91,7 @@ searchBar.addEventListener("keydown", function(event) {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
-  else {
-    // get the search value
-    var searchValue = event.target.value.trim();
-
-    // clear the dropdown list
-    countryList.innerHTML = "";
-
-    // only show countries starting with the search value and with length >= 3
-    if (searchValue.length >= 3) {
-      var filteredCountries = countries.filter(function(country) {
-        return country.toLowerCase().startsWith(searchValue.toLowerCase());
-      });
-
-      // create new option elements and add to the dropdown list
-      filteredCountries.forEach(function(country) {
-        var option = document.createElement("option");
-        option.value = country;
-        countryList.appendChild(option);
-      });
-    }
-  }
-
+ 
 });
 
 // submit button eventlistener for click
@@ -131,9 +112,48 @@ function mapZoom(searchValue) {
   console.log(searchValue);
 }
 
-// to be defined
+// searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
-  console.log(searchValue);
+  // fetchPlaylistId(searchValue);
+
+  fetchDeezerPlaylistInfo(fetchPlaylistId(searchValue));
+}
+
+function fetchPlaylistId(searchValue) {
+  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+  var objLocation = countryIdArr.find(function(x) {
+    return x.country === searchValue
+  })
+
+  if (objLocation) {
+    var searchId = objLocation.id;
+  }
+  console.log(searchId);
+}
+
+function fetchDeezerPlaylistInfo(id) {
+  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${id}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data);
+      for (i = 0; i < 10; i++) {
+        var songName = data.tracks.data[i].title;
+        var songDuration = data.tracks.data[i].duration;
+        var songArtist = data.tracks.data[i].artist.name;
+        var songLink = data.tracks.data[i].link;
+        console.log(songName);
+        console.log(songDuration);
+        console.log(songArtist);
+        console.log(songLink);
+        var minutes = Math.floor(songDuration / 60);
+        var seconds = songDuration % 60;
+        var songLength = `${minutes}:${seconds}`;
+        console.log(songLength);
+
+      }
+  })
 }
 
 
@@ -185,6 +205,7 @@ function updateRecentSearches() {
 
 
 // fetch('https://cors-proxy3.p.rapidapi.com/api', options)
+// this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
 function saveDeezerObjAndCountryArr() {
   var deezerObject;
   if (sessionStorage.getItem("deezerObject") === null) {
@@ -197,56 +218,46 @@ function saveDeezerObjAndCountryArr() {
         sessionStorage.setItem("deezerObject", JSON.stringify(data));
       })
       .then(function(){
-        generateCountryArr();
+        generateCountryArrays();
       })
   } else {
-    generateCountryArr();
+    generateCountryArrays();
   }
 }
-      
-function generateCountryArr() {
+
+// this function takes the saved DeezerObject in session storage and manipulates the data. 
+function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   console.log(deezerObject);
   console.log(deezerObject.data);
-  playlistArr = [];
+  var playlistArr = [];
+  var playlistId = [];
   for (i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
+    // filtering for only playlists that are Top Country playlists and grabs those playlist names and their playlist IDs
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
       playlistArr.unshift(playlistName)
+      playlistId.unshift(deezerObject.data[i].id);
+      console.log(playlistArr);
+      console.log(playlistId);
     }
   }
-  for (let i =0; i < playlistArr.length; i++) {
+  // filters the playlist names and makes an array of just country names
+  for (let i = 0; i < playlistArr.length; i++) {
     var name = playlistArr[i];
     if (name.startsWith("Top ")) {
-      countryArr.unshift(name.substring(4));
+      countryArr.push(name.substring(4));
     }
   }
   console.log(countryArr);
+  // makes the array of objects that pairs country and id
+  for (let z = 0; z < countryArr.length; z++) {
+    var countryIdObj = {"country": countryArr[z], "id": playlistId[z]};
+    countryIdArr.push(countryIdObj);
+  }
+  console.log(countryIdArr);
 }
 
- 
-
-
-// function countryArrFromDeezer() {
-//   checkDeezerStorage();
-//   var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-//   console.log(deezerObject);
-//   console.log(deezerObject.data);
-//   playlistArr = [];
-//   for (i = 0; i < deezerObject.data.length; i++) {
-//     var playlistName = deezerObject.data[i].title;
-//     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
-//       playlistArr.unshift(playlistName)
-//     }
-//   }
-//   for (let i =0; i < playlistArr.length; i++) {
-//     var name = playlistArr[i];
-//     if (name.startsWith("Top ")) {
-//       countryArr.unshift(name.substring(4));
-//     }
-//   }
-//   console.log(countryArr);
-// }
 
 // Map API
 
