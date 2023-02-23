@@ -12,19 +12,19 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-
-//  Array of countries
-var countryArr = ["Japan", "Germany", "Russia", "China", "Colombia", "America", "Poland", "Nigeria"];
+var countries = [
+  "Japan",
+  "Germany",
+  "Russia",
+  "China",
+  "Colombia",
+  "America",
+  "Poland",
+  "Nigeria"
+];
 
 
 function searchCountry(searchValue) {
-  // check if the search value is valid
-  if (!searchValue || !countryArr.includes(searchValue)) {
-     // I am using a modal even though we technically do not have one yet
-    displayModal("Invalid country");
-    return;
-  }
- 
   // // move Map to queried country
   // mapZoom(searchValue);
 
@@ -150,7 +150,7 @@ fetch('https://cors-proxy3.p.rapidapi.com/api', options)
   
   // USER INTERACTIONS
     // search bar – event listener
-    // recent searches – event listener
+    // recent searches – event listener
   
   
   // INITIALIZATION
