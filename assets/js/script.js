@@ -10,7 +10,7 @@
 
 var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
-var recentSearchesDropdown = document.querySelector(".recent-searches");
+var recentSearchesDropdown = document.querySelector("#dropdown-menu2");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 var countries = [
   "Japan",
@@ -167,6 +167,24 @@ function updateRecentSearches() {
   }
   recentSearchesDropdown.appendChild(scrollableMenu);
 }
+
+// get the dropdown trigger button and menu
+var dropdownTrigger = document.querySelector('.dropdown-trigger');
+var dropdownMenu = document.querySelector('.dropdown-menu');
+
+// add a click event listener to the dropdown trigger button
+dropdownTrigger.addEventListener('click', function() {
+  // toggle the "is-active" class on the dropdown menu
+  dropdownMenu.classList.toggle('is-active');
+});
+
+// add a click event listener to the document object
+document.addEventListener('click', function(event) {
+  // check if the target element is not the recent searches dropdown, the dropdown trigger button, or a child element of the recent searches dropdown
+  if (!event.target.closest('#dropdown-menu2') && event.target !== dropdownTrigger) {
+    dropdownMenu.classList.remove('is-active');
+  }
+});
 
 
 
