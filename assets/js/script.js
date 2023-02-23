@@ -42,6 +42,19 @@ function searchCountry(searchValue) {
   updateRecentSearches();
 
 }
+var searchBar = document.querySelector(".search-bar");
+var countryList = document.getElementById("countryList");
+
+// create datalist element with countries
+for (var i = 0; i < countries.length; i++) {
+  var option = document.createElement("option");
+  option.value = countries[i];
+  countryList.appendChild(option);
+}
+
+// set datalist to searchBar
+searchBar.setAttribute("list", "countryList");
+
 
 // on page load, renders LocalStorage
 updateRecentSearches();
