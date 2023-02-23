@@ -1,0 +1,7 @@
+:root {
+    --custom-font: 'Hind Madurai', sans-serif;
+}
+
+* {
+    font-family: var(--custom-font);
+}
