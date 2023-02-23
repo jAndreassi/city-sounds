@@ -18,8 +18,8 @@ window.onload = function() {
   // on page load, renders LocalStorage
   updateRecentSearches();
 
-  // on page load, either fetches from Deezer API, or stores its object in sessionStorage. Also creates countryArr
-  countryArrFromDeezer();
+  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr
+  saveDeezerObjAndCountryArr();
 }
 
 function searchCountry(searchValue) {
@@ -117,7 +117,8 @@ function updateRecentSearches() {
 
 
 // fetch('https://cors-proxy3.p.rapidapi.com/api', options)
-function checkDeezerStorage() {
+function saveDeezerObjAndCountryArr() {
+  var deezerObject;
   if (sessionStorage.getItem("deezerObject") === null) {
     fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
       .then(function(response) {
@@ -126,14 +127,19 @@ function checkDeezerStorage() {
       .then(function(data) {
         deezerObject = data;
         sessionStorage.setItem("deezerObject", JSON.stringify(data));
-      });
+      })
+      .then(function(){
+        generateCountryArr();
+      })
+  } else {
+    generateCountryArr();
   }
 }
-
-function countryArrFromDeezer() {
-  checkDeezerStorage();
-  var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+      
+function generateCountryArr() {
+  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   console.log(deezerObject);
+  console.log(deezerObject.data);
   playlistArr = [];
   for (i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
@@ -149,6 +155,30 @@ function countryArrFromDeezer() {
   }
   console.log(countryArr);
 }
+
+ 
+
+
+// function countryArrFromDeezer() {
+//   checkDeezerStorage();
+//   var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+//   console.log(deezerObject);
+//   console.log(deezerObject.data);
+//   playlistArr = [];
+//   for (i = 0; i < deezerObject.data.length; i++) {
+//     var playlistName = deezerObject.data[i].title;
+//     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
+//       playlistArr.unshift(playlistName)
+//     }
+//   }
+//   for (let i =0; i < playlistArr.length; i++) {
+//     var name = playlistArr[i];
+//     if (name.startsWith("Top ")) {
+//       countryArr.unshift(name.substring(4));
+//     }
+//   }
+//   console.log(countryArr);
+// }
 
 // Map API
 
