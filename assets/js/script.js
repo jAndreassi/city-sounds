@@ -112,12 +112,17 @@ function mapZoom(searchValue) {
   console.log(searchValue);
 }
 
-// to be defined
+// searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  console.log(searchValue);
+  var objLocation = countryIdArr.find(function(x) {
+    return x.country === searchValue
+  })
 
-
+  if (objLocation) {
+    var searchId = objLocation.id;
+  }
+  console.log(searchId);
 }
 
 
