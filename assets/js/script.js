@@ -29,7 +29,6 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
-
 }
 
 function searchCountry(searchValue) {
@@ -49,6 +48,7 @@ function searchCountry(searchValue) {
   // adds new localStorage to dropDown
   updateRecentSearches();
 }
+
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
@@ -108,32 +108,30 @@ function mapZoom(searchValue) {
   console.log(searchValue);
 }
 
-// searches the countryIdArr to find the id for the appropriate playlist from the searchValue
+//Multi-Step function. Probably would break this down, but had issues with variable scoping
+// First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
-  // fetchPlaylistId(searchValue);
-
-  fetchDeezerPlaylistInfo(fetchPlaylistId(searchValue));
-}
-
-function fetchPlaylistId(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var objLocation = countryIdArr.find(function(x) {
     return x.country === searchValue
   })
 
   if (objLocation) {
-    var searchId = objLocation.id;
+    var searchId = objLocation.id;   
   }
-  console.log(searchId);
-}
+  searchId = searchId.toString()
+// dynamically adds searchId to request URL
+  var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`
 
-function fetchDeezerPlaylistInfo(id) {
-  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${id}`)
+  // requests playlist infor from deezer
+  fetch(requestPlaylistUrl)
     .then(function(response) {
       return response.json();
     })
     .then(function(data) {
       console.log(data);
+      var playlistChart = document.querySelector("#deezer-songs");
+      // for loop to pull top 10 song track info
       for (i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
         var songDuration = data.tracks.data[i].duration;
@@ -148,10 +146,36 @@ function fetchDeezerPlaylistInfo(id) {
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
-      }
-  })
-}
+        // if statement to check if playlist chart needs to be erased on first iteration
+        if (playlistChart.innerHTML.trim() !== "" && i === 0) {
+          playlistChart.innerHTML = "";
+        }
 
+        // creation of playlist info on page
+        var tr = document.createElement("tr");
+        var tdName = document.createElement("td");
+        tdName.setAttribute("class", "song-name");
+        var tdLength = document.createElement("td");
+        tdLength.setAttribute("class", "song-duration");
+        var tdArtist = document.createElement("td");
+        tdArtist.setAttribute("class", "song-artist");
+        var tdLink = document.createElement("td");
+        tdLink.setAttribute("class", "song-link");
+        
+        tdName.innerHTML = `${songName}`
+        tdLength.innerHTML = `${songLength}`
+        tdArtist.innerHTML = `${songArtist}`
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a>`
+
+
+        playlistChart.appendChild(tr);
+        tr.appendChild(tdName);
+        tr.appendChild(tdLength);
+        tr.appendChild(tdArtist);
+        tr.appendChild(tdLink);
+      } 
+    })
+}
 
 // adds searchValues to localStorage
 function addToLocalStorage(searchValue) {
@@ -194,12 +218,6 @@ dropdownItems.forEach(function (item) {
     dropdownMenu.classList.remove("is-active");
   });
 });
-
-
-
-
-
-
 
 // API GRABS
 
@@ -250,8 +268,6 @@ function saveDeezerObjAndCountryArr() {
 // this function takes the saved DeezerObject in session storage and manipulates the data. 
 function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  console.log(deezerObject);
-  console.log(deezerObject.data);
   var playlistArr = [];
   var playlistId = [];
   for (i = 0; i < deezerObject.data.length; i++) {
@@ -260,8 +276,6 @@ function generateCountryArrays() {
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
       playlistArr.unshift(playlistName)
       playlistId.unshift(deezerObject.data[i].id);
-      console.log(playlistArr);
-      console.log(playlistId);
     }
   }
   // filters the playlist names and makes an array of just country names
