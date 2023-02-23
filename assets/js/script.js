@@ -44,7 +44,7 @@ function searchCountry(searchValue) {
   // mapZoom(searchValue);
 
   // // query Deezer for playlist associated with country and render on page
-  // fetchAndRenderPlaylist(searchValue);
+  fetchAndRenderPlaylist(searchValue);
 
   // save query to local storage
   addToLocalStorage(searchValue);
@@ -114,6 +114,12 @@ function mapZoom(searchValue) {
 
 // searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
+  // fetchPlaylistId(searchValue);
+
+  fetchDeezerPlaylistInfo(fetchPlaylistId(searchValue));
+}
+
+function fetchPlaylistId(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var objLocation = countryIdArr.find(function(x) {
     return x.country === searchValue
@@ -123,6 +129,26 @@ function fetchAndRenderPlaylist(searchValue) {
     var searchId = objLocation.id;
   }
   console.log(searchId);
+}
+
+function fetchDeezerPlaylistInfo(id) {
+  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${id}`)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      console.log(data);
+      for (i = 0; i < 10; i++) {
+        var songName = data.tracks.data[i].title;
+        var songLength = data.tracks.data[i].duration;
+        var songArtist = data.tracks.data[i].artist.name;
+        var songLink = data.tracks.data[i].link;
+        console.log(songName);
+        console.log(songLength);
+        console.log(songArtist);
+        console.log(songLink);
+      }
+  })
 }
 
 
