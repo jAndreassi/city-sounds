@@ -49,8 +49,8 @@
               </a>
             </div>
           </div>
-<!-- I removed the class "is active" from the dropdown so it functions like a dropdown and isnt always active  -->
-          <div class="dropdown is-hoverable">
+
+          <div class="dropdown">
             <div class="dropdown-trigger">
               <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                 <span>Recent Searches</span>
@@ -64,6 +64,9 @@
                 <div class="dropdown-item"> Recent Searches</a>
               
                 <!-- </div>
+                <div id="recent-search" class="dropdown-item">
+                  <p></p>
+                </div>
                 <hr class="dropdown-divider">
                 <div class="dropdown-item">
                   <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
@@ -83,17 +86,6 @@
               </div>
             </div>
           </div>
-          
-
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
 
           
         </div>
@@ -111,6 +103,26 @@
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
+        <div class="container is-centered">
+          <div>
+            <h2 class="chart-title">Top 10 Songs in <span id="input"></span></h2>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Song Title</th>
+                <th>Duration</th>
+                <th>Artist</th>
+                <th>Link to Song</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="deezer-songs"></tr>
+            </tbody>
+          </table>
+        </div>
+
+
         <!-- grab song data and put in UL -->
         <!-- or embedded music player -->
       </section>
