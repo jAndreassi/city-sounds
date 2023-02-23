@@ -151,10 +151,13 @@ function fetchDeezerPlaylistInfo(id) {
         var seconds = songDuration % 60;
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
-
       }
-  })
-}
+    }
+    .then(function(data) {
+      console.log(data)
+      })
+    )
+  }
 
 
 // adds searchValues to localStorage
@@ -228,8 +231,6 @@ function saveDeezerObjAndCountryArr() {
 // this function takes the saved DeezerObject in session storage and manipulates the data. 
 function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  console.log(deezerObject);
-  console.log(deezerObject.data);
   var playlistArr = [];
   var playlistId = [];
   for (i = 0; i < deezerObject.data.length; i++) {
@@ -238,8 +239,6 @@ function generateCountryArrays() {
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
       playlistArr.unshift(playlistName)
       playlistId.unshift(deezerObject.data[i].id);
-      console.log(playlistArr);
-      console.log(playlistId);
     }
   }
   // filters the playlist names and makes an array of just country names
