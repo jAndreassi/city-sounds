@@ -128,7 +128,7 @@ function checkDeezerStorage() {
 
 function countryArrFromDeezer() {
   checkDeezerStorage();
-  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+  var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   console.log(deezerObject);
   playlistArr = [];
   for (i = 0; i < deezerObject.data.length; i++) {
