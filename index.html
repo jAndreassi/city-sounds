@@ -15,6 +15,9 @@
     <!-- <link rel="stylesheet" href="styles/debug.css"> -->
     <link rel="stylesheet" href="./assets/css/style.css" />
     <!-- Load fonts here -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai&display=swap" rel="stylesheet">
 
     <!-- loads map here, still need to work on size -->
     <link
@@ -44,7 +47,7 @@
         });
         view.ui.remove("zoom") // removes zoom buttons
       });
-    </script> 
+    </script>
   </head>
 
   <body>
@@ -56,43 +59,49 @@
             <img
               class="logo"
               src="./assets/images/city-sounds.png"
-              alt="Bulma: Free, open source, and modern CSS framework based on Flexbox"
-              width="250"
-              height="90" />
-            <!-- search input -->
-            <input
-              class="input search-bar is-rounded"
-              type="text"
-              placeholder="Search Country" />
-            <!-- search button -->
-            <button class="button submit-btn">Search</button>
+              alt="City Sounds Logo"
+              width="175"
+              height="30" />
+          </a>
 
-            <div class="dropdown is-active">
-              <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
-                  <span>Recent Searches</span>
-                  <span class="icon is-small">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                  </span>
-                </button>
-              </div>
-              <div class="dropdown-menu" id="dropdown-menu2" role="menu">
-                <div class="dropdown-content">
-                  <div class="dropdown-item">
-                    <p>Add buttons for recent searches from localStorage? <strong>-</strong>-</p>
-                  </div>
-                  <hr class="dropdown-divider">
-                  <div class="dropdown-item">
-                    <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
-                  </div>
-                  <hr class="dropdown-divider">
-                  <a href="#" class="dropdown-item">
-                    This is a link in case we wanted to add one
-                  </a>
+              <!-- search input & button -->
+          <div class="field has-addons">
+            <div class="control">
+              <input class="input search-bar is-rounded" type="text" placeholder="Find song by country">
+            </div>
+            <div class="control">
+              <a class="button submit-btn is-rounded is-info">
+                Search
+              </a>
+            </div>
+          </div>
+
+          <div class="dropdown is-active">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                <span>Recent Searches</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <p>Add buttons for recent searches from localStorage? <strong>-</strong>-</p>
                 </div>
+                <hr class="dropdown-divider">
+                <div class="dropdown-item">
+                  <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
+                </div>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                  This is a link in case we wanted to add one
+                </a>
               </div>
             </div>
-          </a>
+          </div>
+          
 
           <a
             role="button"
@@ -103,6 +112,8 @@
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
+
+          
         </div>
       </nav>
 

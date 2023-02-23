@@ -12,6 +12,15 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+var countryArr = [];
+
+window.onload = function() {
+  // on page load, renders LocalStorage
+  updateRecentSearches();
+
+  // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr
+  saveDeezerObjAndCountryArr();
+}
 
 function searchCountry(searchValue) {
   // // move Map to queried country
@@ -27,9 +36,6 @@ function searchCountry(searchValue) {
   updateRecentSearches();
 
 }
-
-// on page load, renders LocalStorage
-updateRecentSearches();
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
@@ -92,41 +98,87 @@ function updateRecentSearches() {
   // Testing Deezer API
 
 // CORS Proxy Server Using Rapid API
-deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
+// deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
 
-const encodedParams = new URLSearchParams();
-encodedParams.append("my-url", deezerPlaylistUrl);
+// const encodedParams = new URLSearchParams();
+// encodedParams.append("my-url", deezerPlaylistUrl);
 
-const options = {
-  method: 'POST',
-  headers: {
-    'content-type': 'application/x-www-form-urlencoded',
-    'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
-    'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
-  },
-  body: encodedParams
-};
+// const options = {
+//   method: 'POST',
+//   headers: {
+//     'content-type': 'application/x-www-form-urlencoded',
+//     'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
+//     'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
+//   },
+//   body: encodedParams
+// };
 
 // getting Array of countries 
-var countryArr = [];
 
-fetch('https://cors-proxy3.p.rapidapi.com/api', options)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(data) {
-    playlistArr = [];
-    for (i = 0; i < data.data.length; i++) {
-      var playlistName = data.data[i].title;
-      if (playlistName.includes("Songcatcher") !== true && playlistName.includes("SongCatcher") !== true && playlistName.includes("Worldwide") !== true && playlistName.includes("Top")) {
-        playlistArr.unshift(playlistName)
-      }
+
+// fetch('https://cors-proxy3.p.rapidapi.com/api', options)
+function saveDeezerObjAndCountryArr() {
+  var deezerObject;
+  if (sessionStorage.getItem("deezerObject") === null) {
+    fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        deezerObject = data;
+        sessionStorage.setItem("deezerObject", JSON.stringify(data));
+      })
+      .then(function(){
+        generateCountryArr();
+      })
+  } else {
+    generateCountryArr();
+  }
+}
+      
+function generateCountryArr() {
+  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+  console.log(deezerObject);
+  console.log(deezerObject.data);
+  playlistArr = [];
+  for (i = 0; i < deezerObject.data.length; i++) {
+    var playlistName = deezerObject.data[i].title;
+    if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
+      playlistArr.unshift(playlistName)
     }
-    for (z = 0; z < playlistArr.length; z++) {
-      countryArr.unshift(playlistArr[z].split(" ")[1]);
+  }
+  for (let i =0; i < playlistArr.length; i++) {
+    var name = playlistArr[i];
+    if (name.startsWith("Top ")) {
+      countryArr.unshift(name.substring(4));
     }
-    console.log(countryArr);
-  });
+  }
+  console.log(countryArr);
+}
+
+ 
+
+
+// function countryArrFromDeezer() {
+//   checkDeezerStorage();
+//   var deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
+//   console.log(deezerObject);
+//   console.log(deezerObject.data);
+//   playlistArr = [];
+//   for (i = 0; i < deezerObject.data.length; i++) {
+//     var playlistName = deezerObject.data[i].title;
+//     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
+//       playlistArr.unshift(playlistName)
+//     }
+//   }
+//   for (let i =0; i < playlistArr.length; i++) {
+//     var name = playlistArr[i];
+//     if (name.startsWith("Top ")) {
+//       countryArr.unshift(name.substring(4));
+//     }
+//   }
+//   console.log(countryArr);
+// }
 
 // Map API
 
