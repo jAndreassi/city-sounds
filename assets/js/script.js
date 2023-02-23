@@ -5,12 +5,9 @@
 
 // FUNCTIONS
 
-// maybe not exactly right, but something like this
-// var countryName = searchBar.value;
-
 var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
-var recentSearchesDropdown = document.querySelector(".recent-searches");
+var recentSearchesDropdown = document.querySelector(".dropdown-trigger");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 // var countries = [
 //   "Japan",
@@ -51,7 +48,6 @@ function searchCountry(searchValue) {
 
   // adds new localStorage to dropDown
   updateRecentSearches();
-
 }
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
@@ -64,7 +60,7 @@ var countryList = document.getElementById("countryList");
 // }
 
 // // set datalist to searchBar
-// searchBar.setAttribute("list", "countryList");
+searchBar.setAttribute("list", "countryList");
 
 // add event listener to search bar for input
 searchBar.addEventListener("input", function(event) {
@@ -169,14 +165,40 @@ function addToLocalStorage(searchValue) {
 // To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
 // Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
 function updateRecentSearches() {
-  recentSearchesDropdown.innerHTML = "";
-  for (var i = 0; i < recentSearches.length; i++) {
-    var listItem = document.createElement("a");
-    listItem.classList.add("dropdown-item");
-    listItem.textContent = recentSearches[i];
-    recentSearchesDropdown.appendChild(listItem);
+  var dropdownContent = document.querySelector('.dropdown-content');
+  dropdownContent.innerHTML = '';
+  var recentSearchesLimited = recentSearches.slice(0, 5);
+  for (var i = 0; i < recentSearchesLimited.length; i++) {
+    var recentSearch = recentSearchesLimited[i];
+    var link = document.createElement('a');
+    link.classList.add('dropdown-item');
+    link.textContent = recentSearch;
+    dropdownContent.appendChild(link);
   }
 }
+
+document.addEventListener("click", function (event) {
+  var dropdownTrigger = document.querySelector(".dropdown-trigger");
+  var dropdownMenu = document.querySelector("#dropdown-trigger");
+  if (
+    !dropdownTrigger.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("is-active");
+  }
+});
+
+var dropdownItems = document.querySelectorAll(".dropdown-item");
+dropdownItems.forEach(function (item) {
+  item.addEventListener("click", function (event) {
+    dropdownMenu.classList.remove("is-active");
+  });
+});
+
+
+
+
+
 
 
 // API GRABS
