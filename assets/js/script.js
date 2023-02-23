@@ -25,6 +25,10 @@ var countries = [
 
 
 function searchCountry(searchValue) {
+  // check if the search value is valid
+  if (!searchValue || !countries.includes(searchValue)) {
+    return;
+  }
   // // move Map to queried country
   // mapZoom(searchValue);
 
