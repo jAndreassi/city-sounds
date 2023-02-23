@@ -128,7 +128,7 @@ function fetchPlaylistId(searchValue) {
 }
 
 function fetchDeezerPlaylistInfo(id) {
-  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${id}`)
+  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/1362526495`)
     .then(function(response) {
       return response.json();
     })
@@ -148,13 +148,27 @@ function fetchDeezerPlaylistInfo(id) {
         var seconds = songDuration % 60;
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
-        playlistChart.innerHTML =
-          `<tr>
-            <td class="song-name">${songName}</td>
-            <td class="song-duration">${songLength}</td>
-            <td class="song-artist">${songArtist}</td>
-            <td class="song-link"><a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a></td>
-          </tr>`
+        var tr = document.createElement("tr");
+        var tdName = document.createElement("td");
+        tdName.setAttribute("class", "song-name");
+        var tdLength = document.createElement("td");
+        tdLength.setAttribute("class", "song-duration");
+        var tdArtist = document.createElement("td");
+        tdArtist.setAttribute("class", "song-artist");
+        var tdLink = document.createElement("td");
+        tdLink.setAttribute("class", "song-link");
+
+        tdName.innerHTML = `${songName}<td>`
+        tdLength.innerHTML = `${songLength}<td>`
+        tdArtist.innerHTML = `${songArtist}<td>`
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a></td></tr>`
+
+
+        playlistChart.appendChild(tr);
+        tr.appendChild(tdName);
+        tr.appendChild(tdLength);
+        tr.appendChild(tdArtist);
+        tr.appendChild(tdLink);
       }
     }
     )
