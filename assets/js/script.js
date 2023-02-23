@@ -83,7 +83,6 @@ searchBar.addEventListener("input", function(event) {
   }
 });
 
-
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
