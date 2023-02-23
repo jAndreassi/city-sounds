@@ -55,6 +55,26 @@ for (var i = 0; i < countries.length; i++) {
 // set datalist to searchBar
 searchBar.setAttribute("list", "countryList");
 
+// add event listener to search bar for input
+searchBar.addEventListener("input", function(event) {
+  var searchValue = event.target.value.trim();
+  if (searchValue.length >= 3) {
+    // filter countries by search value
+    var filteredCountries = countries.filter(function(country) {
+      return country.toLowerCase().startsWith(searchValue.toLowerCase());
+    });
+
+    // create new option elements and add to the dropdown list
+    var optionsHTML = filteredCountries.map(function(country) {
+      return '<option value="' + country + '"></option>';
+    }).join('');
+    countryList.innerHTML = optionsHTML;
+  } else {
+    countryList.innerHTML = "";
+  }
+});
+
+
 
 // on page load, renders LocalStorage
 updateRecentSearches();
@@ -65,6 +85,28 @@ searchBar.addEventListener("keydown", function(event) {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
+  else {
+    // get the search value
+    var searchValue = event.target.value.trim();
+
+    // clear the dropdown list
+    countryList.innerHTML = "";
+
+    // only show countries starting with the search value and with length >= 3
+    if (searchValue.length >= 3) {
+      var filteredCountries = countries.filter(function(country) {
+        return country.toLowerCase().startsWith(searchValue.toLowerCase());
+      });
+
+      // create new option elements and add to the dropdown list
+      filteredCountries.forEach(function(country) {
+        var option = document.createElement("option");
+        option.value = country;
+        countryList.appendChild(option);
+      });
+    }
+  }
+
 });
 
 // submit button eventlistener for click
@@ -120,25 +162,26 @@ function updateRecentSearches() {
   // Testing Deezer API
 
 // CORS Proxy Server Using Rapid API
-deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
+// deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
 
-const encodedParams = new URLSearchParams();
-encodedParams.append("my-url", deezerPlaylistUrl);
+// const encodedParams = new URLSearchParams();
+// encodedParams.append("my-url", deezerPlaylistUrl);
 
-const options = {
-  method: 'POST',
-  headers: {
-    'content-type': 'application/x-www-form-urlencoded',
-    'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
-    'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
-  },
-  body: encodedParams
-};
+// const options = {
+//   method: 'POST',
+//   headers: {
+//     'content-type': 'application/x-www-form-urlencoded',
+//     'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
+//     'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
+//   },
+//   body: encodedParams
+// };
 
 // getting Array of countries 
 var countryArr = [];
 
-fetch('https://cors-proxy3.p.rapidapi.com/api', options)
+// fetch('https://cors-proxy3.p.rapidapi.com/api', options)
+fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
   .then(function(response) {
     return response.json();
   })
