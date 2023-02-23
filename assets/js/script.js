@@ -109,14 +109,9 @@ function mapZoom(searchValue) {
 }
 
 // searches the countryIdArr to find the id for the appropriate playlist from the searchValue
+// Then renders the data on page
+
 function fetchAndRenderPlaylist(searchValue) {
-  // fetchPlaylistId(searchValue);
-
-  fetchPlaylistId(searchValue)
-  // fetchDeezerPlaylistInfo();
-}
-
-function fetchPlaylistId(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var objLocation = countryIdArr.find(function(x) {
     return x.country === searchValue
@@ -153,6 +148,9 @@ function fetchPlaylistId(searchValue) {
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
+        if (playlistChart.innerHTML.trim() !== "" && i === 0) {
+          playlistChart.innerHTML = "";
+        }
         var tr = document.createElement("tr");
         var tdName = document.createElement("td");
         tdName.setAttribute("class", "song-name");
@@ -162,7 +160,7 @@ function fetchPlaylistId(searchValue) {
         tdArtist.setAttribute("class", "song-artist");
         var tdLink = document.createElement("td");
         tdLink.setAttribute("class", "song-link");
-
+        
         tdName.innerHTML = `${songName}<td>`
         tdLength.innerHTML = `${songLength}<td>`
         tdArtist.innerHTML = `${songArtist}<td>`
@@ -174,10 +172,10 @@ function fetchPlaylistId(searchValue) {
         tr.appendChild(tdLength);
         tr.appendChild(tdArtist);
         tr.appendChild(tdLink);
-      }
-    }
-    )
+      } 
+    })
 }
+
 
 
 // adds searchValues to localStorage
