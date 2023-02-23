@@ -29,7 +29,6 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
-
 }
 
 function searchCountry(searchValue) {
@@ -49,6 +48,7 @@ function searchCountry(searchValue) {
   // adds new localStorage to dropDown
   updateRecentSearches();
 }
+
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
@@ -108,9 +108,8 @@ function mapZoom(searchValue) {
   console.log(searchValue);
 }
 
-// searches the countryIdArr to find the id for the appropriate playlist from the searchValue
-// Then renders the data on page
-
+//Multi-Step function. Probably would break this down, but had issues with variable scoping
+// First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var objLocation = countryIdArr.find(function(x) {
@@ -121,12 +120,10 @@ function fetchAndRenderPlaylist(searchValue) {
     var searchId = objLocation.id;   
   }
   searchId = searchId.toString()
-  console.log(searchId);
-// }
-
+// dynamically adds searchId to request URL
   var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`
-  console.log(requestPlaylistUrl);
-// function fetchDeezerPlaylistInfo() {
+
+  // requests playlist infor from deezer
   fetch(requestPlaylistUrl)
     .then(function(response) {
       return response.json();
@@ -134,6 +131,7 @@ function fetchAndRenderPlaylist(searchValue) {
     .then(function(data) {
       console.log(data);
       var playlistChart = document.querySelector("#deezer-songs");
+      // for loop to pull top 10 song track info
       for (i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
         var songDuration = data.tracks.data[i].duration;
@@ -148,9 +146,12 @@ function fetchAndRenderPlaylist(searchValue) {
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
+        // if statement to check if playlist chart needs to be erased on first iteration
         if (playlistChart.innerHTML.trim() !== "" && i === 0) {
           playlistChart.innerHTML = "";
         }
+
+        // creation of playlist info on page
         var tr = document.createElement("tr");
         var tdName = document.createElement("td");
         tdName.setAttribute("class", "song-name");
@@ -175,8 +176,6 @@ function fetchAndRenderPlaylist(searchValue) {
       } 
     })
 }
-
-
 
 // adds searchValues to localStorage
 function addToLocalStorage(searchValue) {
@@ -219,12 +218,6 @@ dropdownItems.forEach(function (item) {
     dropdownMenu.classList.remove("is-active");
   });
 });
-
-
-
-
-
-
 
 // API GRABS
 
