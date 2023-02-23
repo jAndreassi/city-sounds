@@ -17,6 +17,11 @@ main,
 }
 /*  */
 
+.chart-title {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+}
 
 main {
     display: flex;
