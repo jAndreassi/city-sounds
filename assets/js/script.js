@@ -5,12 +5,9 @@
 
 // FUNCTIONS
 
-// maybe not exactly right, but something like this
-// var countryName = searchBar.value;
-
 var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
-var recentSearchesDropdown = document.querySelector("#dropdown-menu2");
+var recentSearchesDropdown = document.querySelector(".dropdown-trigger");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 var countries = [
   "Japan",
@@ -49,20 +46,19 @@ function searchCountry(searchValue) {
 
   // adds new localStorage to dropDown
   updateRecentSearches();
-
 }
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
 // // create datalist element with countries
-// for (var i = 0; i < countries.length; i++) {
-//   var option = document.createElement("option");
-//   option.value = countries[i];
-//   countryList.appendChild(option);
-// }
+for (var i = 0; i < countries.length; i++) {
+  var option = document.createElement("option");
+  option.value = countries[i];
+  countryList.appendChild(option);
+}
 
 // // set datalist to searchBar
-// searchBar.setAttribute("list", "countryList");
+searchBar.setAttribute("list", "countryList");
 
 // add event listener to search bar for input
 searchBar.addEventListener("input", function(event) {
@@ -149,42 +145,39 @@ function addToLocalStorage(searchValue) {
 // To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
 // Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
 function updateRecentSearches() {
-  recentSearchesDropdown.innerHTML = "";
+  var dropdownContent = document.querySelector('.dropdown-content');
+  dropdownContent.innerHTML = '';
   var recentSearchesLimited = recentSearches.slice(0, 5);
   for (var i = 0; i < recentSearchesLimited.length; i++) {
-    var listItem = document.createElement("a");
-    listItem.classList.add("dropdown-item");
-    listItem.textContent = recentSearchesLimited[i];
-    recentSearchesDropdown.appendChild(listItem);
+    var recentSearch = recentSearchesLimited[i];
+    var link = document.createElement('a');
+    link.classList.add('dropdown-item');
+    link.textContent = recentSearch;
+    dropdownContent.appendChild(link);
   }
-  var scrollableMenu = document.createElement("div");
-  scrollableMenu.classList.add("dropdown-content");
-  for (var i = 5; i < recentSearches.length; i++) {
-    var listItem = document.createElement("a");
-    listItem.classList.add("dropdown-item");
-    listItem.textContent = recentSearches[i];
-    scrollableMenu.appendChild(listItem);
-  }
-  recentSearchesDropdown.appendChild(scrollableMenu);
 }
 
-// get the dropdown trigger button and menu
-var dropdownTrigger = document.querySelector('.dropdown-trigger');
-var dropdownMenu = document.querySelector('.dropdown-menu');
-
-// add a click event listener to the dropdown trigger button
-dropdownTrigger.addEventListener('click', function() {
-  // toggle the "is-active" class on the dropdown menu
-  dropdownMenu.classList.toggle('is-active');
-});
-
-// add a click event listener to the document object
-document.addEventListener('click', function(event) {
-  // check if the target element is not the recent searches dropdown, the dropdown trigger button, or a child element of the recent searches dropdown
-  if (!event.target.closest('#dropdown-menu2') && event.target !== dropdownTrigger) {
-    dropdownMenu.classList.remove('is-active');
+document.addEventListener("click", function (event) {
+  var dropdownTrigger = document.querySelector(".dropdown-trigger");
+  var dropdownMenu = document.querySelector("#dropdown-trigger");
+  if (
+    !dropdownTrigger.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("is-active");
   }
 });
+
+var dropdownItems = document.querySelectorAll(".dropdown-item");
+dropdownItems.forEach(function (item) {
+  item.addEventListener("click", function (event) {
+    dropdownMenu.classList.remove("is-active");
+  });
+});
+
+
+
+
 
 
 
