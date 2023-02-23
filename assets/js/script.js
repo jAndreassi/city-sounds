@@ -12,6 +12,17 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
+var countries = [
+  "Japan",
+  "Germany",
+  "Russia",
+  "China",
+  "Colombia",
+  "America",
+  "Poland",
+  "Nigeria"
+];
+
 var countryArr = [];
 
 window.onload = function() {
@@ -23,6 +34,10 @@ window.onload = function() {
 }
 
 function searchCountry(searchValue) {
+  // check if the search value is valid
+  if (!searchValue || !countries.includes(searchValue)) {
+    return;
+  }
   // // move Map to queried country
   // mapZoom(searchValue);
 
@@ -36,6 +51,37 @@ function searchCountry(searchValue) {
   updateRecentSearches();
 
 }
+var searchBar = document.querySelector(".search-bar");
+var countryList = document.getElementById("countryList");
+
+// // create datalist element with countries
+// for (var i = 0; i < countries.length; i++) {
+//   var option = document.createElement("option");
+//   option.value = countries[i];
+//   countryList.appendChild(option);
+// }
+
+// // set datalist to searchBar
+// searchBar.setAttribute("list", "countryList");
+
+// add event listener to search bar for input
+searchBar.addEventListener("input", function(event) {
+  var searchValue = event.target.value.trim().toLowerCase();
+  if (searchValue.length >= 3) {
+    // filter countries by search value
+    var filteredCountries = countries.filter(function(country) {
+      return country.toLowerCase().startsWith(searchValue);
+    });
+    countryList.innerHTML = "";
+    filteredCountries.forEach(function(country) {
+      var option = document.createElement("option");
+      option.value = country;
+      countryList.appendChild(option);
+    });
+  } else {
+    countryList.innerHTML = "";
+  }
+});
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
@@ -43,6 +89,28 @@ searchBar.addEventListener("keydown", function(event) {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
+  else {
+    // get the search value
+    var searchValue = event.target.value.trim();
+
+    // clear the dropdown list
+    countryList.innerHTML = "";
+
+    // only show countries starting with the search value and with length >= 3
+    if (searchValue.length >= 3) {
+      var filteredCountries = countries.filter(function(country) {
+        return country.toLowerCase().startsWith(searchValue.toLowerCase());
+      });
+
+      // create new option elements and add to the dropdown list
+      filteredCountries.forEach(function(country) {
+        var option = document.createElement("option");
+        option.value = country;
+        countryList.appendChild(option);
+      });
+    }
+  }
+
 });
 
 // submit button eventlistener for click
@@ -191,7 +259,7 @@ function generateCountryArr() {
   
   // USER INTERACTIONS
     // search bar – event listener
-    // recent searches – event listener
+    // recent searches – event listener
   
   
   // INITIALIZATION
