@@ -34,10 +34,15 @@
         });
         const view = new MapView({
           map: map,
+          container: "viewDiv", // Div element
           center: [-118.805, 34.027], // Longitude, latitude
           zoom: 2, // Zoom level
-          container: "viewDiv", // Div element
+          constraints: { // disables zoom
+          minZoom: 2,
+          maxZoom: 2
+          }
         });
+        view.ui.remove("zoom") // removes zoom buttons
       });
     </script> 
   </head>
