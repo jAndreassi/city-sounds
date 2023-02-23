@@ -14,6 +14,13 @@ var recentSearchesDropdown = document.querySelector(".recent-searches");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 var countryArr = [];
 
+window.onload = function() {
+  // on page load, renders LocalStorage
+  updateRecentSearches();
+
+  // on page load, either fetches from Deezer API, or stores its object in sessionStorage. Also creates countryArr
+  countryArrFromDeezer();
+}
 
 function searchCountry(searchValue) {
   // // move Map to queried country
@@ -29,12 +36,6 @@ function searchCountry(searchValue) {
   updateRecentSearches();
 
 }
-
-// on page load, renders LocalStorage
-updateRecentSearches();
-
-// on page load, either fetches from Deezer API, or stores its object in sessionStorage. Also creates countryArr
-countryArrFromDeezer();
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
