@@ -65,3 +65,13 @@ main {
     align-items: center;
     padding-right: 12px;
 }
+
+.text {
+    margin: 2px 0px 0px 12px;
+}
+
+@media (max-width: 575px) {
+    .text {
+        display: none;
+    }
+}
