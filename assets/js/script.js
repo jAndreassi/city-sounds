@@ -386,6 +386,16 @@ function generateCountryArrays() {
       }
     });
     view.ui._removeComponents(["attribution"]); // removes footer
+    // disable all zooming options below
+    view.on("mouse-wheel", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", ["Control"], function(event) {
+      event.stopPropagation();
+    });
   });
   
   // USER INTERACTIONS
