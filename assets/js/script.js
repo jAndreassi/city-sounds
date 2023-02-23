@@ -45,35 +45,34 @@ function searchCountry(searchValue) {
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
-// create datalist element with countries
-for (var i = 0; i < countries.length; i++) {
-  var option = document.createElement("option");
-  option.value = countries[i];
-  countryList.appendChild(option);
-}
+// // create datalist element with countries
+// for (var i = 0; i < countries.length; i++) {
+//   var option = document.createElement("option");
+//   option.value = countries[i];
+//   countryList.appendChild(option);
+// }
 
-// set datalist to searchBar
-searchBar.setAttribute("list", "countryList");
+// // set datalist to searchBar
+// searchBar.setAttribute("list", "countryList");
 
 // add event listener to search bar for input
 searchBar.addEventListener("input", function(event) {
-  var searchValue = event.target.value.trim();
+  var searchValue = event.target.value.trim().toLowerCase();
   if (searchValue.length >= 3) {
     // filter countries by search value
     var filteredCountries = countries.filter(function(country) {
-      return country.toLowerCase().startsWith(searchValue.toLowerCase());
+      return country.toLowerCase().startsWith(searchValue);
     });
-
-    // create new option elements and add to the dropdown list
-    var optionsHTML = filteredCountries.map(function(country) {
-      return '<option value="' + country + '"></option>';
-    }).join('');
-    countryList.innerHTML = optionsHTML;
+    countryList.innerHTML = "";
+    filteredCountries.forEach(function(country) {
+      var option = document.createElement("option");
+      option.value = country;
+      countryList.appendChild(option);
+    });
   } else {
     countryList.innerHTML = "";
   }
 });
-
 
 
 // on page load, renders LocalStorage
