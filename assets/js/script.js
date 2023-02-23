@@ -150,13 +150,24 @@ function addToLocalStorage(searchValue) {
 // Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
 function updateRecentSearches() {
   recentSearchesDropdown.innerHTML = "";
-  for (var i = 0; i < recentSearches.length; i++) {
+  var recentSearchesLimited = recentSearches.slice(0, 5);
+  for (var i = 0; i < recentSearchesLimited.length; i++) {
+    var listItem = document.createElement("a");
+    listItem.classList.add("dropdown-item");
+    listItem.textContent = recentSearchesLimited[i];
+    recentSearchesDropdown.appendChild(listItem);
+  }
+  var scrollableMenu = document.createElement("div");
+  scrollableMenu.classList.add("dropdown-content");
+  for (var i = 5; i < recentSearches.length; i++) {
     var listItem = document.createElement("a");
     listItem.classList.add("dropdown-item");
     listItem.textContent = recentSearches[i];
-    recentSearchesDropdown.appendChild(listItem);
+    scrollableMenu.appendChild(listItem);
   }
+  recentSearchesDropdown.appendChild(scrollableMenu);
 }
+
 
 
 // API GRABS
