@@ -89,28 +89,6 @@ searchBar.addEventListener("keydown", function(event) {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
-  else {
-    // get the search value
-    var searchValue = event.target.value.trim();
-
-    // clear the dropdown list
-    countryList.innerHTML = "";
-
-    // only show countries starting with the search value and with length >= 3
-    if (searchValue.length >= 3) {
-      var filteredCountries = countries.filter(function(country) {
-        return country.toLowerCase().startsWith(searchValue.toLowerCase());
-      });
-
-      // create new option elements and add to the dropdown list
-      filteredCountries.forEach(function(country) {
-        var option = document.createElement("option");
-        option.value = country;
-        countryList.appendChild(option);
-      });
-    }
-  }
-
 });
 
 // submit button eventlistener for click
@@ -133,7 +111,9 @@ function mapZoom(searchValue) {
 
 // to be defined
 function fetchAndRenderPlaylist(searchValue) {
+  deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   console.log(searchValue);
+
 }
 
 
