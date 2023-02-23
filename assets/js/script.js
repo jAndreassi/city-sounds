@@ -112,7 +112,8 @@ function mapZoom(searchValue) {
 function fetchAndRenderPlaylist(searchValue) {
   // fetchPlaylistId(searchValue);
 
-  fetchDeezerPlaylistInfo(fetchPlaylistId(searchValue));
+  fetchPlaylistId(searchValue)
+  // fetchDeezerPlaylistInfo();
 }
 
 function fetchPlaylistId(searchValue) {
@@ -122,13 +123,16 @@ function fetchPlaylistId(searchValue) {
   })
 
   if (objLocation) {
-    var searchId = objLocation.id;
+    var searchId = objLocation.id;   
   }
+  searchId = searchId.toString()
   console.log(searchId);
-}
+// }
 
-function fetchDeezerPlaylistInfo(id) {
-  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/1362526495`)
+  var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`
+  console.log(requestPlaylistUrl);
+// function fetchDeezerPlaylistInfo() {
+  fetch(requestPlaylistUrl)
     .then(function(response) {
       return response.json();
     })
@@ -148,6 +152,7 @@ function fetchDeezerPlaylistInfo(id) {
         var seconds = songDuration % 60;
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
+
         var tr = document.createElement("tr");
         var tdName = document.createElement("td");
         tdName.setAttribute("class", "song-name");
@@ -172,7 +177,7 @@ function fetchDeezerPlaylistInfo(id) {
       }
     }
     )
-  }
+}
 
 
 // adds searchValues to localStorage
