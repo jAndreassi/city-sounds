@@ -140,13 +140,18 @@ function fetchDeezerPlaylistInfo(id) {
       console.log(data);
       for (i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
-        var songLength = data.tracks.data[i].duration;
+        var songDuration = data.tracks.data[i].duration;
         var songArtist = data.tracks.data[i].artist.name;
         var songLink = data.tracks.data[i].link;
         console.log(songName);
-        console.log(songLength);
+        console.log(songDuration);
         console.log(songArtist);
         console.log(songLink);
+        var minutes = Math.floor(songDuration / 60);
+        var seconds = songDuration % 60;
+        var songLength = `${minutes}:${seconds}`;
+        console.log(songLength);
+
       }
   })
 }
