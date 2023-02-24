@@ -14,6 +14,8 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
 var countryIdArr = [];
+var lat;
+var lon;
 
 window.onload = function() {
   // on page load, renders LocalStorage
@@ -30,8 +32,6 @@ function searchCountry(searchValue) {
   }
   
   // gets latitude and longitude for queried countries
-  var lat;
-  var lon;
   getLatAndLon(searchValue);
 
   // // move Map to queried country
