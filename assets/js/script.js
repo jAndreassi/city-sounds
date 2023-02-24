@@ -388,40 +388,32 @@ function getLatAndLon(searchValue) {
 
     // document.getElementById("bounceBerlin").addEventListener("click", () => {
     window.mapZoom = function(lat, lon) {
-      console.log(lat);
-      console.log(lon);
 
-      view.goTo({
-        center: [lon, lat]
-      })
-      .catch(function(error) {
+      view
+        .goTo(
+          {
+            position: {
+              x: lon,
+              y: lat,
+              z: 5000000,
+              spatialReference: {
+                wkid: 4326
+              }
+            },
+            heading: 0,
+            tilt: 0
+          },
+          {
+            speedFactor: 0.8,
+            easing: customEasing
+          }
+        )
+        .catch(function(error) {
         if (error.name != "AbortError") {
            console.error(error);
         }
       });
-      
-      // view
-      //   .goTo(
-      //     {
-      //       position: {
-      //         x: lat,
-      //         y: lon,
-      //         z: 18000000,
-      //         spatialReference: {
-      //           wkid: 4326
-      //         }
-      //       },
-      //       heading: 0,
-      //       tilt: 0
-      //     },
-      //     {
-      //       speedFactor: 0.8,
-      //       easing: customEasing
-      //     }
-      //   )
-      //   .catch(catchAbortError);
     }
-    // );
   });
   
   
