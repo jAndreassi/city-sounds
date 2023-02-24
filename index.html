@@ -18,6 +18,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai&display=swap" rel="stylesheet">
+    <link href="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-sound-icon-image_1198529.jpg">
+
     <!-- Load icons here -->
     <script defer src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
     <!-- loads map here, still need to work on size -->
@@ -94,11 +96,8 @@
               </div>
             </div>
           </section>
-          
-          
         </div>
       </nav>
-
       <!-- empty div tag that will receive recent-searches dropdown -->
       <div class="recent-searches"></div>
     </header>
@@ -106,12 +105,17 @@
     <main>
       <!-- map div from Google Maps -->
       <div id="map-container" class="width-80">
+        <!-- this is a test delete this eventually -->
+        <div id="optionsDiv">
+          <button id="bounceBerlin">Bounce to Berlin</button>
+        </div>
+        <!-- this is a test delete this eventually end -->
         <div id="viewDiv"></div>
       </div>
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
-        <div class="container is-centered">
+        <div class="container is-centered" id="absolute">
           <div>
             <h2 class="chart-title">Search A Country to See The Top 10 Songs</h2>
           </div>
@@ -124,6 +128,7 @@
                 <th>Link to Song</th>
               </tr>
             </thead>
+            </div>
             <tbody id="deezer-songs">
             </tbody>
           </table>

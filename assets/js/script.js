@@ -1,3 +1,5 @@
+
+
 // DEPENDENCIES (DOM Elements)
 // DATA / STATE / GLOBAL VARIABLES
 
@@ -166,8 +168,8 @@ function fetchAndRenderPlaylist(searchValue) {
         tdName.innerHTML = `${songName}`
         tdLength.innerHTML = `${songLength}`
         tdArtist.innerHTML = `${songArtist}`
-        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a>`
-
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><img class="sound-on" src="./assets/images/music-note.svg" /></a>`
+       
 
         playlistChart.appendChild(tr);
         tr.appendChild(tdName);
@@ -349,34 +351,6 @@ function getLatAndLon(searchValue) {
             }
         }
       },
-      // popupTemplate: {
-      //   title: "{name}",
-      //   content: [
-      //       {
-      //           type: "fields",
-      //           fieldInfos: [
-      //               {
-      //                   fieldName: "addrs",
-      //                   label: "Address"
-      //               },
-      //               {
-      //                   fieldName: "lat",
-      //                   label: "Latitude",
-      //                   format: {
-      //                       places: 2
-      //                   }
-      //               },
-      //               {
-      //                   fieldName: "lon",
-      //                   label: "Longitude",
-      //                   format: {
-      //                       places: 2
-      //                   }
-      //               }
-      //           ]
-      //       },
-      //   ],
-      // }
     });
 
     const map = new Map({
@@ -387,12 +361,58 @@ function getLatAndLon(searchValue) {
     const view = new SceneView({
       container: "viewDiv",
       map: map,
-      center: [1000 , 20],
+      center: [1000, 20],
       ui: {
         components: ["attribution"]
       }
     });
     view.ui._removeComponents(["attribution"]); // removes footer
+    // disable all zooming options below
+    view.on("mouse-wheel", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", ["Control"], function(event) {
+      event.stopPropagation();
+    });
+    view.on("mouse-wheel", function(event){
+      // prevents zooming with the mouse-wheel event
+      event.stopPropagation();
+    });
+
+    // location finders below
+    // COORDINATES TO BOUNCE TO
+    var latCoordinates = 13.4
+    var lonCoordinates = 52.52
+
+    function customEasing(t) {
+      return 1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10);
+    }
+
+    document.getElementById("bounceBerlin").addEventListener("click", () => {
+      view
+        .goTo(
+          {
+            position: {
+              x: latCoordinates,
+              y: lonCoordinates,
+              z: 18000000,
+              spatialReference: {
+                wkid: 4326
+              }
+            },
+            heading: 0,
+            tilt: 0
+          },
+          {
+            speedFactor: 0.8,
+            easing: customEasing
+          }
+        )
+        .catch(catchAbortError);
+    });
   });
   
   // USER INTERACTIONS
