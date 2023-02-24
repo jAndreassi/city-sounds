@@ -206,7 +206,7 @@ function updateRecentSearches() {
 
 var dropdown = document.querySelector(".dropdown");
 dropdown.addEventListener("click", function (event) {
-  var dropdownMenu = document.querySelector("#dropdown-menu");
+  // var dropdownMenu = document.querySelector("#dropdown-menu");
 
   dropdown.classList.toggle('is-active');
   // if (
@@ -217,12 +217,14 @@ dropdown.addEventListener("click", function (event) {
   // }
 });
 
-var dropdownItems = document.querySelectorAll(".dropdown-item");
-dropdownItems.forEach(function (item) {
-  item.addEventListener("click", function (event) {
-    dropdownMenu.classList.remove("is-active");
+var dropdownContent = document.querySelector(".dropdown-content");
+dropdownContent.addEventListener("click", function (event) {
+  var searchValue = event.target.textContent;
+  console.log(event.target);
+  console.log(searchValue);
+  searchCountry(searchValue);
   });
-});
+  
 
 // API GRABS
 
