@@ -9,16 +9,6 @@ var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
 var recentSearchesDropdown = document.querySelector(".dropdown-trigger");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-// var countries = [
-//   "Japan",
-//   "Germany",
-//   "Russia",
-//   "China",
-//   "Colombia",
-//   "America",
-//   "Poland",
-//   "Nigeria"
-// ];
 
 var countryArr = [];
 var countryIdArr = [];
@@ -29,8 +19,6 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
-
-  // makeLonLatArray();
 }
 
 function searchCountry(searchValue) {
@@ -38,6 +26,12 @@ function searchCountry(searchValue) {
   if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
+  
+  // gets latitude and longitude for queried countries
+  var lat;
+  var lon;
+  getLatAndLon(searchValue);
+
   // // move Map to queried country
   // mapZoom(searchValue);
 
@@ -301,16 +295,12 @@ function generateCountryArrays() {
   console.log(countryIdArr);
 }
 
-// function makeLonLatArray(csv) {
-//   var lines = csv.split("\n");
-//   var lonLatbyCountry = [];
-//   var headers = lines[0].split(",");
-  
-//   for ()
-
-
-// }
-
+function getLatAndLon(searchValue) {
+  lat = countryData[searchValue].lat;
+  lon = countryData[searchValue].lon;
+  console.log(lat);
+  console.log(lon);
+}
 
 // Map API
 
