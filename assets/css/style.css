@@ -57,6 +57,7 @@ main {
 .navbar-brand {
     display: flex;
     justify-content: space-between;
+    width: 100vw; /* need to classify width to stop bulma responsiveness from breaking the flex */
 }
 
 .navbar-right {
@@ -73,5 +74,9 @@ main {
 @media (max-width: 575px) {
     .text {
         display: none;
+    }
+    #map-container {
+        width: 90%;
+        height: 40%;
     }
 }

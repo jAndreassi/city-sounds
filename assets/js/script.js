@@ -141,8 +141,9 @@ function fetchAndRenderPlaylist(searchValue) {
         console.log(songDuration);
         console.log(songArtist);
         console.log(songLink);
-        var minutes = Math.floor(songDuration / 60);
-        var seconds = songDuration % 60;
+        var minutes = Math.floor(songDuration / 60).toString();
+        var rawSeconds = songDuration % 60;
+        var seconds = rawSeconds.toString().padStart(2, '0');
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
