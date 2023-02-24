@@ -1,3 +1,5 @@
+
+
 // DEPENDENCIES (DOM Elements)
 // DATA / STATE / GLOBAL VARIABLES
 
@@ -165,8 +167,8 @@ function fetchAndRenderPlaylist(searchValue) {
         tdName.innerHTML = `${songName}`
         tdLength.innerHTML = `${songLength}`
         tdArtist.innerHTML = `${songArtist}`
-        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer">Listen here!</a>`
-
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><img class="sound-on" src="./assets/images/music-note.svg" /></a>`
+       
 
         playlistChart.appendChild(tr);
         tr.appendChild(tdName);

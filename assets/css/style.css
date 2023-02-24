@@ -55,3 +55,8 @@ main {
 * {
     font-family: var(--custom-font);
 }
+
+td.song-link {
+width: 65px;
+
+}
