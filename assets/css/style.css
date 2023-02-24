@@ -1,4 +1,4 @@
-/* map css */
+/* css */
 html,
 body,
 main,
@@ -20,7 +20,6 @@ main,
 .esriAttribution {
     display: none;
 }
-/*  */
 
 .chart-title {
     display: flex;
@@ -32,12 +31,13 @@ main {
     display: flex;
     justify-content: center;
     flex-flow: row wrap;
-    align-items: center;
+    align-content: flex-start;
 }
 
 h2 {
     font-weight: bold;
-    font-size: 1.5em;
+    font-size: 1.25em;
+    text-align: center;
 }
 
 .control {
@@ -57,7 +57,7 @@ h2 {
 }
 
 td.song-link {
-width: 65px;
+width: 50px;
 
 }
 .dropdown {
