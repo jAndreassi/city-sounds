@@ -180,7 +180,7 @@ function updateRecentSearches() {
 
 // event listener to activate recent searches dropdown
 var dropdown = document.querySelector(".dropdown");
-dropdown.addEventListener("click", function (event) {
+dropdown.addEventListener("click", function () {
   dropdown.classList.toggle('is-active');
 });
 
@@ -190,7 +190,7 @@ dropdownContent.addEventListener("click", function (event) {
   var searchValue = event.target.textContent;
   console.log(event.target);
   console.log(searchValue);
-
+  searchBar.value = searchValue;
   searchCountry(searchValue);
   });
   
