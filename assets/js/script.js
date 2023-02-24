@@ -14,8 +14,7 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
 var countryIdArr = [];
-var lat;
-var lon;
+
 
 window.onload = function() {
   // on page load, renders LocalStorage
@@ -31,11 +30,15 @@ function searchCountry(searchValue) {
     return;
   }
   
+  var lat;
+  var lon;
+
   // gets latitude and longitude for queried countries
   getLatAndLon(searchValue);
 
+
   // // move Map to queried country
-  // mapZoom(searchValue);
+  mapZoom(lat, lon);
 
   // // query Deezer for playlist associated with country and render on page
   fetchAndRenderPlaylist(searchValue);
@@ -102,9 +105,8 @@ recentSearchesDropdown.addEventListener("click", function(event) {
 
 
 // to be defined
-function mapZoom(searchValue) {
-  console.log(searchValue);
-}
+// function mapZoom()
+
 
 //Multi-Step function. Probably would break this down, but had issues with variable scoping
 // First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
@@ -383,21 +385,20 @@ function getLatAndLon(searchValue) {
     });
 
     // location finders below
-    // COORDINATES TO BOUNCE TO
-    var latCoordinates = 13.4
-    var lonCoordinates = 52.52
+    // COORDINATES TO BOUNCE TO are lat and lon
 
     function customEasing(t) {
       return 1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10);
     }
 
-    document.getElementById("bounceBerlin").addEventListener("click", () => {
+    // document.getElementById("bounceBerlin").addEventListener("click", () => {
+    window.mapZoom = function(lat, lon) {
       view
         .goTo(
           {
             position: {
-              x: latCoordinates,
-              y: lonCoordinates,
+              x: lat,
+              y: lon,
               z: 18000000,
               spatialReference: {
                 wkid: 4326
@@ -412,8 +413,10 @@ function getLatAndLon(searchValue) {
           }
         )
         .catch(catchAbortError);
-    });
+    }
+    // );
   });
+  
   
   // USER INTERACTIONS
     // search bar – event listener
