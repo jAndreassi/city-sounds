@@ -28,13 +28,7 @@ function searchCountry(searchValue) {
   if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
-  // gets latitude and longitude for queried countries
-  var latLonObj = getLatAndLon(searchValue);
-  console.log(latLonObj);
-  // // move Map to queried country
-  mapZoom(latLonObj.lat, latLonObj.lon);
-
-  // // query Deezer for playlist associated with country and render on page
+  // query Deezer for playlist associated with country and render on page
   fetchAndRenderPlaylist(searchValue);
 
   // save query to local storage
@@ -42,6 +36,13 @@ function searchCountry(searchValue) {
 
   // adds new localStorage to dropDown
   updateRecentSearches();
+
+  // gets latitude and longitude for queried countries
+  var latLonObj = getLatAndLon(searchValue);
+  console.log(latLonObj);
+
+  // move Map to queried country
+  mapZoom(latLonObj.lat, latLonObj.lon);
 }
 
 var searchBar = document.querySelector(".search-bar");
