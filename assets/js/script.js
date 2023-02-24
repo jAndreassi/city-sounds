@@ -151,6 +151,10 @@ function fetchAndRenderPlaylist(searchValue) {
           playlistChart.innerHTML = "";
         }
 
+        // update playlist header
+        var title = document.querySelector('.chart-title');
+        title.textContent = `Top 10 Songs in ${searchValue}`;
+
         // creation of playlist info on page
         var tr = document.createElement("tr");
         var tdName = document.createElement("td");
