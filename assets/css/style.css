@@ -14,6 +14,7 @@ main,
     width: 60%;
     height: 60%;
     margin-top: 20px;
+    margin-bottom: 30px;
 }
 
 .esriAttribution {
@@ -75,6 +76,11 @@ width: 65px;
     margin: 2px 0px 0px 12px;
 }
 
+.location-playlist {
+    position: absolute;
+    margin-top: 550px;
+}
+
 @media (max-width: 575px) {
     .text {
         display: none;
@@ -82,5 +88,8 @@ width: 65px;
     #map-container {
         width: 90%;
         height: 40%;
+    }
+    .location-playlist {
+        margin-top: 380px;
     }
 }
