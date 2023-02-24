@@ -14,8 +14,6 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
 var countryIdArr = [];
-var lat;
-var lon;
 
 window.onload = function() {
   // on page load, renders LocalStorage
@@ -30,12 +28,11 @@ function searchCountry(searchValue) {
   if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
-  
   // gets latitude and longitude for queried countries
-  getLatAndLon(searchValue);
-
+  var latLonObj = getLatAndLon(searchValue);
+  console.log(latLonObj);
   // // move Map to queried country
-  // mapZoom(searchValue);
+  mapZoom(latLonObj.lat, latLonObj.lon);
 
   // // query Deezer for playlist associated with country and render on page
   fetchAndRenderPlaylist(searchValue);
@@ -102,9 +99,8 @@ recentSearchesDropdown.addEventListener("click", function(event) {
 
 
 // to be defined
-function mapZoom(searchValue) {
-  console.log(searchValue);
-}
+// function mapZoom()
+
 
 //Multi-Step function. Probably would break this down, but had issues with variable scoping
 // First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
@@ -303,10 +299,11 @@ function generateCountryArrays() {
 }
 
 function getLatAndLon(searchValue) {
-  lat = countryData[searchValue].lat;
-  lon = countryData[searchValue].lon;
+  lat = Number(countryData[searchValue].lat);
+  lon = Number(countryData[searchValue].lon);
   console.log(lat);
   console.log(lon);
+  return {lat, lon} 
 }
 
 // Map API
@@ -388,22 +385,22 @@ function getLatAndLon(searchValue) {
     });
 
     // location finders below
-    // COORDINATES TO BOUNCE TO
-    var latCoordinates = 13.4
-    var lonCoordinates = 52.52
+    // COORDINATES TO BOUNCE TO are lat and lon
 
     function customEasing(t) {
       return 1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10);
     }
 
-    document.getElementById("bounceBerlin").addEventListener("click", () => {
+    // document.getElementById("bounceBerlin").addEventListener("click", () => {
+    window.mapZoom = function(lat, lon) {
+
       view
         .goTo(
           {
             position: {
-              x: latCoordinates,
-              y: lonCoordinates,
-              z: 18000000,
+              x: lon,
+              y: lat,
+              z: 5000000,
               spatialReference: {
                 wkid: 4326
               }
@@ -416,9 +413,14 @@ function getLatAndLon(searchValue) {
             easing: customEasing
           }
         )
-        .catch(catchAbortError);
-    });
+        .catch(function(error) {
+        if (error.name != "AbortError") {
+           console.error(error);
+        }
+      });
+    }
   });
+  
   
   // USER INTERACTIONS
     // search bar – event listener

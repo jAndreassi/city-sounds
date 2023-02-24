@@ -259,7 +259,7 @@ var countryData = {
   Ukraine: { code: 'UA', lat: '48.379433', lon: '31.16558' },
   Uganda: { code: 'UG', lat: '1.373333', lon: '32.290275' },
   'U.S. Minor Outlying Islands': { code: 'UM', lat: '', lon: '' },
-  'United States': { code: 'US', lat: '37.09024', lon: '-95.712891' },
+  'USA': { code: 'US', lat: '37.09024', lon: '-95.712891' },
   Uruguay: { code: 'UY', lat: '-32.522779', lon: '-55.765835' },
   Uzbekistan: { code: 'UZ', lat: '41.377491', lon: '64.585262' },
   'Vatican City': { code: 'VA', lat: '41.902916', lon: '12.453389' },
