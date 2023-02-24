@@ -143,8 +143,9 @@ function fetchAndRenderPlaylist(searchValue) {
         console.log(songDuration);
         console.log(songArtist);
         console.log(songLink);
-        var minutes = Math.floor(songDuration / 60);
-        var seconds = songDuration % 60;
+        var minutes = Math.floor(songDuration / 60).toString();
+        var rawSeconds = songDuration % 60;
+        var seconds = rawSeconds.toString().padStart(2, '0');
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
@@ -152,6 +153,10 @@ function fetchAndRenderPlaylist(searchValue) {
         if (playlistChart.innerHTML.trim() !== "" && i === 0) {
           playlistChart.innerHTML = "";
         }
+
+        // update playlist header
+        var title = document.querySelector('.chart-title');
+        title.textContent = `Top 10 Songs in ${searchValue}`;
 
         // creation of playlist info on page
         var tr = document.createElement("tr");
