@@ -1,4 +1,4 @@
-/* map css */
+/* css */
 html,
 body,
 main,
@@ -20,7 +20,6 @@ main,
 .esriAttribution {
     display: none;
 }
-/*  */
 
 .chart-title {
     display: flex;
@@ -30,9 +29,15 @@ main,
 
 main {
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    flex-flow: row wrap;
+    align-content: flex-start;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.25em;
+    text-align: center;
 }
 
 .control {
@@ -52,7 +57,7 @@ main {
 }
 
 td.song-link {
-width: 65px;
+width: 50px;
 
 }
 .dropdown {
@@ -68,17 +73,12 @@ width: 65px;
 .navbar-right {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     padding-right: 12px;
 }
 
 .text {
     margin: 2px 0px 0px 12px;
-}
-
-.location-playlist {
-    position: absolute;
-    margin-top: 550px;
 }
 
 @media (max-width: 575px) {
@@ -88,8 +88,5 @@ width: 65px;
     #map-container {
         width: 90%;
         height: 40%;
-    }
-    .location-playlist {
-        margin-top: 380px;
     }
 }
