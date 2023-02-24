@@ -5,7 +5,6 @@
 
 var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
-var recentSearchesDropdown = document.querySelector(".dropdown-trigger");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
@@ -44,13 +43,6 @@ function searchCountry(searchValue) {
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
-// // create datalist element with countryArr
-// for (let i = 0; i < countryArr.length; i++) {
-//   var option = document.createElement("option");
-//   option.value = countryArr[i];
-//   countryList.appendChild(option);
-// }
-
 // // set datalist to searchBar
 searchBar.setAttribute("list", "countryList");
 
@@ -87,17 +79,6 @@ submitButton.addEventListener("click", function() {
   var searchValue = searchBar.value.trim();
   searchCountry(searchValue);
   });
-
-// event listener for recent search dropdown
-recentSearchesDropdown.addEventListener("click", function(event) {
-  var recentSearch = event.target.textContent;
-  searchCountry(recentSearch);
-});
-
-
-// to be defined
-// function mapZoom()
-
 
 //Multi-Step function. Probably would break this down, but had issues with variable scoping
 // First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
@@ -209,6 +190,7 @@ dropdownContent.addEventListener("click", function (event) {
   var searchValue = event.target.textContent;
   console.log(event.target);
   console.log(searchValue);
+
   searchCountry(searchValue);
   });
   
