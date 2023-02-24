@@ -197,22 +197,27 @@ function updateRecentSearches() {
   var recentSearchesLimited = recentSearches.slice(0, 5);
   for (let i = 0; i < recentSearchesLimited.length; i++) {
     var recentSearch = recentSearchesLimited[i];
+    console.log(link)
     var link = document.createElement('a');
     link.classList.add('dropdown-item');
     link.textContent = recentSearch;
     dropdownContent.appendChild(link);
+    // link.innerHTML(recentSearches)
   }
 }
 
-document.addEventListener("click", function (event) {
-  var dropdownTrigger = document.querySelector(".dropdown-trigger");
-  var dropdownMenu = document.querySelector("#dropdown-trigger");
-  if (
-    !dropdownTrigger.contains(event.target) &&
-    !dropdownMenu.contains(event.target)
-  ) {
-    dropdownMenu.classList.remove("is-active");
-  }
+
+var dropdown = document.querySelector(".dropdown");
+dropdown.addEventListener("click", function (event) {
+  var dropdownMenu = document.querySelector("#dropdown-menu");
+
+  dropdown.classList.toggle('is-active');
+  // if (
+  //   !dropdown.contains(event.target) &&
+  //   !dropdownMenu.contains(event.target)
+  // ) {
+  //   dropdownMenu.classList.remove("is-active");
+  // }
 });
 
 var dropdownItems = document.querySelectorAll(".dropdown-item");
