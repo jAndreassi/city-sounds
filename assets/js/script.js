@@ -1,9 +1,5 @@
-
-
 // DEPENDENCIES (DOM Elements)
 // DATA / STATE / GLOBAL VARIABLES
-
-
 
 // FUNCTIONS
 
@@ -186,8 +182,7 @@ function addToLocalStorage(searchValue) {
   }
 };
 
-// To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
-// Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
+// To update dropdown for recentSearches
 function updateRecentSearches() {
   var dropdownContent = document.querySelector('.dropdown-content');
   dropdownContent.innerHTML = '';
@@ -199,24 +194,16 @@ function updateRecentSearches() {
     link.classList.add('dropdown-item');
     link.textContent = recentSearch;
     dropdownContent.appendChild(link);
-    // link.innerHTML(recentSearches)
   }
 }
 
-
+// event listener to activate recent searches dropdown
 var dropdown = document.querySelector(".dropdown");
 dropdown.addEventListener("click", function (event) {
-  // var dropdownMenu = document.querySelector("#dropdown-menu");
-
   dropdown.classList.toggle('is-active');
-  // if (
-  //   !dropdown.contains(event.target) &&
-  //   !dropdownMenu.contains(event.target)
-  // ) {
-  //   dropdownMenu.classList.remove("is-active");
-  // }
 });
 
+// event listener with delegation to allow clicking on the recent searches
 var dropdownContent = document.querySelector(".dropdown-content");
 dropdownContent.addEventListener("click", function (event) {
   var searchValue = event.target.textContent;
@@ -228,28 +215,7 @@ dropdownContent.addEventListener("click", function (event) {
 
 // API GRABS
 
-  // Deezer
-
-  // Testing Deezer API
-
-// CORS Proxy Server Using Rapid API
-// deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
-
-// const encodedParams = new URLSearchParams();
-// encodedParams.append("my-url", deezerPlaylistUrl);
-
-// const options = {
-//   method: 'POST',
-//   headers: {
-//     'content-type': 'application/x-www-form-urlencoded',
-//     'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
-//     'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
-//   },
-//   body: encodedParams
-// };
-
-// getting Array of countries 
-
+// Deezer
 
 // fetch('https://cors-proxy3.p.rapidapi.com/api', options)
 // this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
