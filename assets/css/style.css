@@ -30,9 +30,14 @@ main,
 
 main {
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    justify-content: center;
+    flex-flow: row wrap;
     align-items: center;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 1.5em;
 }
 
 .control {
@@ -68,7 +73,7 @@ width: 65px;
 .navbar-right {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     padding-right: 12px;
 }
 
@@ -76,10 +81,6 @@ width: 65px;
     margin: 2px 0px 0px 12px;
 }
 
-.location-playlist {
-    position: absolute;
-    margin-top: 550px;
-}
 
 @media (max-width: 575px) {
     .text {
@@ -88,8 +89,5 @@ width: 65px;
     #map-container {
         width: 90%;
         height: 40%;
-    }
-    .location-playlist {
-        margin-top: 380px;
     }
 }
