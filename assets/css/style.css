@@ -81,7 +81,6 @@ width: 65px;
     margin: 2px 0px 0px 12px;
 }
 
-
 @media (max-width: 575px) {
     .text {
         display: none;
