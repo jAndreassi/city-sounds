@@ -15,7 +15,6 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 var countryArr = [];
 var countryIdArr = [];
 
-
 window.onload = function() {
   // on page load, renders LocalStorage
   updateRecentSearches();
@@ -29,16 +28,11 @@ function searchCountry(searchValue) {
   if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
-  
-  var lat;
-  var lon;
-
   // gets latitude and longitude for queried countries
-  getLatAndLon(searchValue);
-
-
+  var latLonObj = getLatAndLon(searchValue);
+  console.log(latLonObj);
   // // move Map to queried country
-  mapZoom(lat, lon);
+  mapZoom(latLonObj.lat, latLonObj.lon);
 
   // // query Deezer for playlist associated with country and render on page
   fetchAndRenderPlaylist(searchValue);
@@ -300,10 +294,11 @@ function generateCountryArrays() {
 }
 
 function getLatAndLon(searchValue) {
-  lat = countryData[searchValue].lat;
-  lon = countryData[searchValue].lon;
+  lat = Number(countryData[searchValue].lat);
+  lon = Number(countryData[searchValue].lon);
   console.log(lat);
   console.log(lon);
+  return {lat, lon} 
 }
 
 // Map API
@@ -393,26 +388,38 @@ function getLatAndLon(searchValue) {
 
     // document.getElementById("bounceBerlin").addEventListener("click", () => {
     window.mapZoom = function(lat, lon) {
-      view
-        .goTo(
-          {
-            position: {
-              x: lat,
-              y: lon,
-              z: 18000000,
-              spatialReference: {
-                wkid: 4326
-              }
-            },
-            heading: 0,
-            tilt: 0
-          },
-          {
-            speedFactor: 0.8,
-            easing: customEasing
-          }
-        )
-        .catch(catchAbortError);
+      console.log(lat);
+      console.log(lon);
+
+      view.goTo({
+        center: [lon, lat]
+      })
+      .catch(function(error) {
+        if (error.name != "AbortError") {
+           console.error(error);
+        }
+      });
+      
+      // view
+      //   .goTo(
+      //     {
+      //       position: {
+      //         x: lat,
+      //         y: lon,
+      //         z: 18000000,
+      //         spatialReference: {
+      //           wkid: 4326
+      //         }
+      //       },
+      //       heading: 0,
+      //       tilt: 0
+      //     },
+      //     {
+      //       speedFactor: 0.8,
+      //       easing: customEasing
+      //     }
+      //   )
+      //   .catch(catchAbortError);
     }
     // );
   });
