@@ -29,6 +29,8 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
+
+  // makeLonLatArray();
 }
 
 function searchCountry(searchValue) {
@@ -53,7 +55,7 @@ var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
 
 // // create datalist element with countryArr
-// for (var i = 0; i < countryArr.length; i++) {
+// for (let i = 0; i < countryArr.length; i++) {
 //   var option = document.createElement("option");
 //   option.value = countryArr[i];
 //   countryList.appendChild(option);
@@ -132,7 +134,7 @@ function fetchAndRenderPlaylist(searchValue) {
       console.log(data);
       var playlistChart = document.querySelector("#deezer-songs");
       // for loop to pull top 10 song track info
-      for (i = 0; i < 10; i++) {
+      for (let i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
         var songDuration = data.tracks.data[i].duration;
         var songArtist = data.tracks.data[i].artist.name;
@@ -197,7 +199,7 @@ function updateRecentSearches() {
   var dropdownContent = document.querySelector('.dropdown-content');
   dropdownContent.innerHTML = '';
   var recentSearchesLimited = recentSearches.slice(0, 5);
-  for (var i = 0; i < recentSearchesLimited.length; i++) {
+  for (let i = 0; i < recentSearchesLimited.length; i++) {
     var recentSearch = recentSearchesLimited[i];
     var link = document.createElement('a');
     link.classList.add('dropdown-item');
@@ -275,7 +277,7 @@ function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var playlistArr = [];
   var playlistId = [];
-  for (i = 0; i < deezerObject.data.length; i++) {
+  for (let i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
     // filtering for only playlists that are Top Country playlists and grabs those playlist names and their playlist IDs
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
@@ -298,6 +300,16 @@ function generateCountryArrays() {
   }
   console.log(countryIdArr);
 }
+
+// function makeLonLatArray(csv) {
+//   var lines = csv.split("\n");
+//   var lonLatbyCountry = [];
+//   var headers = lines[0].split(",");
+  
+//   for ()
+
+
+// }
 
 
 // Map API
