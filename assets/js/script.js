@@ -18,10 +18,11 @@ window.onload = function() {
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
 
-  // adds map markers
-  mapMarkers();
+  // // adds map markers
+  // mapMarkers();
 
-  loadMap();
+  // // loads map
+  // loadMap();
 }
 
 function searchCountry(searchValue) {
@@ -230,9 +231,13 @@ function saveDeezerObjAndCountryArr() {
       })
       .then(function(){
         generateCountryArrays();
+        mapMarkers();
+        loadMap();
       })
   } else {
     generateCountryArrays();
+    mapMarkers();
+    loadMap();
   }
 }
 
