@@ -38,39 +38,6 @@ function searchCountry(searchValue) {
   // gets latitude and longitude for queried countries
   var latLonObj = getLatAndLon(searchValue);
   console.log(latLonObj);
-  // Where i started
-  // for (i = 0; i < 5; i++) {
-  //   myCoords = getLatAndLon(countryArr[i]);
-  // console.log(countryArr[i]);
-  // console.log(myCoords);
-  // const featureLayer = new FeatureLayer({
-  //   outFields: ["*"],
-  //   source: myCoords.map((d, i) => ({
-  //     geometry: {
-  //       type: "point",
-  //       longitude: d.lon,
-  //       latitude: d.lat,
-  //     },
-  //     attributes: {
-  //       ObjectID: i,
-  //       ...d,
-  //     },
-  //   })),
-  //   objectIdField: "ObjectID",
-  //   geometryType: "point",
-  //   renderer: {
-  //     type: "simple",
-  //     symbol: {
-  //       type: "text",
-  //       color: "white",
-  //       text: "\ue6a2",
-  //       font: {
-  //         size: 30,
-  //         family: "CalciteWebCoreIcons",
-  //       },
-  //     },
-  //   },
-  // });
 
   var myCountry = getLatAndLon("Brazil");
   console.log(myCountry);
@@ -321,11 +288,9 @@ require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], (
 ) => {
   const data = [
     {
-      lat: "42.546245",
-      lon: "1.601554",
-      lat: 32.727482,
-      lon: -117.1560632,
-      name: "Automotive Museum",
+      lat:
+      lon:
+      
     },
   ];
 
@@ -436,7 +401,6 @@ require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], (
       let lon = myCoords.lon;
       console.log(lat);
       console.log(lon);
-      // }
     }
   };
 });
