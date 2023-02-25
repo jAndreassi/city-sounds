@@ -61,6 +61,10 @@ width: 50px;
 
 }
 
+tr {
+    max-width:fit-content;
+}
+
 .hover-effect:hover {
     background-color: #898989;
     color: whitesmoke;
