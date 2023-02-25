@@ -56,6 +56,16 @@ td.song-link {
 width: 50px;
 
 }
+
+.hover-effect:hover {
+    background-color: #898989;
+    color: whitesmoke;
+}
+
+.hover-effect:hover img {
+    filter: invert(1);
+}
+
 .dropdown {
     margin-left: 12px;
 }
@@ -76,6 +86,10 @@ width: 50px;
 .text {
     margin: 2px 0px 0px 12px;
 }
+
+/* td {
+    max-width: 75vw;
+} */
 
 @media (max-width: 575px) {
     .text {
