@@ -16,6 +16,9 @@ window.onload = function () {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
+
+  // function that adds icons to map
+  markMarkers();
 };
 
 function searchCountry(searchValue) {
@@ -36,39 +39,38 @@ function searchCountry(searchValue) {
   var latLonObj = getLatAndLon(searchValue);
   console.log(latLonObj);
   // Where i started
-  for (i = 0; i < 5; i++) {
-    myCoords = getLatAndLon(countryArr[i]);
-    // console.log(countryArr[i]);
-    console.log(myCoords);
-    const featureLayer = new FeatureLayer({
-      outFields: ["*"],
-      source: myCoords.map((d, i) => ({
-        geometry: {
-          type: "point",
-          longitude: d.lon,
-          latitude: d.lat,
-        },
-        attributes: {
-          ObjectID: i,
-          ...d,
-        },
-      })),
-      objectIdField: "ObjectID",
-      geometryType: "point",
-      renderer: {
-        type: "simple",
-        symbol: {
-          type: "text",
-          color: "white",
-          text: "\ue6a2",
-          font: {
-            size: 30,
-            family: "CalciteWebCoreIcons",
-          },
-        },
-      },
-    });
-  }
+  // for (i = 0; i < 5; i++) {
+  //   myCoords = getLatAndLon(countryArr[i]);
+  // console.log(countryArr[i]);
+  // console.log(myCoords);
+  // const featureLayer = new FeatureLayer({
+  //   outFields: ["*"],
+  //   source: myCoords.map((d, i) => ({
+  //     geometry: {
+  //       type: "point",
+  //       longitude: d.lon,
+  //       latitude: d.lat,
+  //     },
+  //     attributes: {
+  //       ObjectID: i,
+  //       ...d,
+  //     },
+  //   })),
+  //   objectIdField: "ObjectID",
+  //   geometryType: "point",
+  //   renderer: {
+  //     type: "simple",
+  //     symbol: {
+  //       type: "text",
+  //       color: "white",
+  //       text: "\ue6a2",
+  //       font: {
+  //         size: 30,
+  //         family: "CalciteWebCoreIcons",
+  //       },
+  //     },
+  //   },
+  // });
 
   var myCountry = getLatAndLon("Brazil");
   console.log(myCountry);
@@ -317,13 +319,7 @@ require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], (
       name: "Automotive Museum",
     },
   ];
-  for (i = 0; i < 5; i++) {
-    myCoords = getLatAndLon(countryArr[i]);
-    // console.log(countryArr[i]);
-    console.log(myCoords);
-    lat = myCoords[1];
-    lon = myCoords[1];
-  }
+
   const featureLayer = new FeatureLayer({
     outFields: ["*"],
     source: data.map((d, i) => ({
@@ -417,6 +413,22 @@ require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], (
           console.error(error);
         }
       });
+  };
+
+  window.markMarkers = function () {
+    console.log(countryArr);
+    console.log(countryData);
+
+    for (i = 0; i < countryArr.length; i++) {
+      let myCoords = getLatAndLon(countryArr[i]);
+      console.log(myCoords);
+
+      let lat = myCoords.lat;
+      let lon = myCoords.lon;
+      console.log(lat);
+      console.log(lon);
+      // }
+    }
   };
 });
 
