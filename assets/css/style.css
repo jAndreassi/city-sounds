@@ -57,10 +57,6 @@ width: 50px;
 
 }
 
-tr {
-    max-width:fit-content;
-}
-
 .hover-effect:hover {
     background-color: #898989;
     color: whitesmoke;
@@ -90,6 +86,10 @@ tr {
 .text {
     margin: 2px 0px 0px 12px;
 }
+
+/* td {
+    max-width: 75vw;
+} */
 
 @media (max-width: 575px) {
     .text {
