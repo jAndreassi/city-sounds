@@ -91,9 +91,17 @@ width: 50px;
     margin: 2px 0px 0px 12px;
 }
 
-/* td {
-    max-width: 75vw;
-} */
+td {
+    max-width: 30vw;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+td:hover {
+    overflow: scroll;
+    text-overflow:initial;
+}
 
 @media (max-width: 575px) {
     .text {
