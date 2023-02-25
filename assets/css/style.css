@@ -10,6 +10,10 @@ main,
   width: 100%;
 }
 
+.esri-icon-volume-on {
+    color: purple;
+}
+
 #map-container {
     width: 60%;
     height: 60%;

@@ -9,6 +9,7 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
 var countryIdArr = [];
+var countryObjArr = [];
 
 window.onload = function() {
   // on page load, renders LocalStorage
@@ -215,7 +216,6 @@ dropdownContent.addEventListener("click", function (event) {
 
 // Deezer
 
-// fetch('https://cors-proxy3.p.rapidapi.com/api', options)
 // this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
 function saveDeezerObjAndCountryArr() {
   var deezerObject;
@@ -290,9 +290,8 @@ function mapMarkers() {
 
 
 // Map API
-let countryObjArr = [];
 
-  //  Map to Display
+//  Map to Display
 function loadMap() {
   require([
     "esri/Map",
