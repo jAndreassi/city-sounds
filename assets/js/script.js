@@ -19,6 +19,8 @@ window.onload = function() {
 
   // adds map markers
   mapMarkers();
+
+  loadMap();
 }
 
 function searchCountry(searchValue) {
@@ -272,26 +274,19 @@ function getLatAndLon(searchValue) {
 }
 
 // Map API
+let countryObjArr = [];
 
   //  Map to Display
-
+function loadMap() {
   require([
     "esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
   ], (Map, SceneView, FeatureLayer) => {
 
-    const data = [
-      {
-          lat: 10,
-          lon: -117,
-          name: "Automotive Museum",
-      },
-    ];
-
     const featureLayer = new FeatureLayer({
       outFields: ["*"],
-      source: data.map((d, i) => (
+      source: countryObjArr.map((d, i) => (
         {
             geometry: {
                 type: "point",
@@ -384,21 +379,24 @@ function getLatAndLon(searchValue) {
         }
       });
     }
-
+  });
+}
     window.mapMarkers = function() {
+
       for (i = 0; i < countryArr.length; i++) {
-        var myCoords = countryData[countryArr[i]];
-        console.log(countryArr[i]);
+        var myCoords = getLatAndLon(countryArr[i]);
         let lat = myCoords.lat;
         let lon = myCoords.lon;
-        console.log(lat);
-        console.log(lon);
-        
+        let name = countryArr[i];
+
+        let countryObj = {lat, lon, name}
+        countryObjArr.push(countryObj);
       }
+      console.log(countryObjArr);
 
     }
-  });
-  
+
+
   
   // USER INTERACTIONS
     // search bar – event listener
