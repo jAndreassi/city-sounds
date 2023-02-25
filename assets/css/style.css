@@ -109,6 +109,18 @@ td {
     text-overflow: ellipsis;
 }
 
+.table td {
+    vertical-align: middle;
+}
+
+.table td a {
+    margin-bottom: auto;
+}
+
+tr {
+    margin-bottom: -5px;
+}
+
 td:hover {
     /* overflow: scroll; */
     text-overflow:initial;
