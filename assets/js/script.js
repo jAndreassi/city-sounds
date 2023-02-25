@@ -16,6 +16,9 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
+
+  // adds map markers
+  mapMarkers();
 }
 
 function searchCountry(searchValue) {
@@ -380,6 +383,19 @@ function getLatAndLon(searchValue) {
            console.error(error);
         }
       });
+    }
+
+    window.mapMarkers = function() {
+      for (i = 0; i < countryArr.length; i++) {
+        var myCoords = countryData[countryArr[i]];
+        console.log(countryArr[i]);
+        let lat = myCoords.lat;
+        let lon = myCoords.lon;
+        console.log(lat);
+        console.log(lon);
+        
+      }
+
     }
   });
   
