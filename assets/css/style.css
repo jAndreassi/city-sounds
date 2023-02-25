@@ -25,6 +25,10 @@ main,
     display: flex;
     justify-content: center;
     padding-top: 8px;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: black;
+    margin: -24px 0px 4px 0px;
 }
 
 main {
@@ -123,6 +127,13 @@ td:hover {
     }
     h1 {
         font-size: 1em;
+    }
+    .chart-title {
+        font-size: 1em;
+        margin-top: -24px;
+    }
+    .playlist-header {
+        font-size: 0.75em;
     }
 }
 
