@@ -60,6 +60,16 @@ td.song-link {
 width: 50px;
 
 }
+
+.hover-effect:hover {
+    background-color: #898989;
+    color: whitesmoke;
+}
+
+.hover-effect:hover img {
+    filter: invert(1);
+}
+
 .dropdown {
     margin-left: 12px;
 }

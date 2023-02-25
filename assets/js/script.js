@@ -130,6 +130,7 @@ function fetchAndRenderPlaylist(searchValue) {
 
         // creation of playlist info on page
         var tr = document.createElement("tr");
+        tr.setAttribute("class", "hover-effect");
         var tdName = document.createElement("td");
         tdName.setAttribute("class", "song-name");
         var tdLength = document.createElement("td");
