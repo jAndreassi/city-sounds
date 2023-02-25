@@ -44,6 +44,10 @@ h2 {
     margin: auto;
 }
 
+.dropdown-trigger .button {
+    border: 0px solid white;
+}
+
 :root {
     --custom-font: 'Hind Madurai', sans-serif;
 }
@@ -80,7 +84,7 @@ width: 50px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 12px 12px 0px 0px;
+    padding: 12px 24px 0px 0px;
 }
 
 .text {
