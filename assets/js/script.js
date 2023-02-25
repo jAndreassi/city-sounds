@@ -10,13 +10,13 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 var countryArr = [];
 var countryIdArr = [];
 
-window.onload = function() {
+window.onload = function () {
   // on page load, renders LocalStorage
   updateRecentSearches();
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
-}
+};
 
 function searchCountry(searchValue) {
   // check if the search value is valid
@@ -35,6 +35,43 @@ function searchCountry(searchValue) {
   // gets latitude and longitude for queried countries
   var latLonObj = getLatAndLon(searchValue);
   console.log(latLonObj);
+  // Where i started
+  for (i = 0; i < 5; i++) {
+    myCoords = getLatAndLon(countryArr[i]);
+    // console.log(countryArr[i]);
+    console.log(myCoords);
+    const featureLayer = new FeatureLayer({
+      outFields: ["*"],
+      source: myCoords.map((d, i) => ({
+        geometry: {
+          type: "point",
+          longitude: d.lon,
+          latitude: d.lat,
+        },
+        attributes: {
+          ObjectID: i,
+          ...d,
+        },
+      })),
+      objectIdField: "ObjectID",
+      geometryType: "point",
+      renderer: {
+        type: "simple",
+        symbol: {
+          type: "text",
+          color: "white",
+          text: "\ue6a2",
+          font: {
+            size: 30,
+            family: "CalciteWebCoreIcons",
+          },
+        },
+      },
+    });
+  }
+
+  var myCountry = getLatAndLon("Brazil");
+  console.log(myCountry);
 
   // move Map to queried country
   mapZoom(latLonObj.lat, latLonObj.lon);
@@ -47,15 +84,15 @@ var countryList = document.getElementById("countryList");
 searchBar.setAttribute("list", "countryList");
 
 // add event listener to search bar for input
-searchBar.addEventListener("input", function(event) {
+searchBar.addEventListener("input", function (event) {
   var searchValue = event.target.value.trim().toLowerCase();
   if (searchValue.length >= 3) {
     // filter countries by search value
-    var filteredCountries = countryArr.filter(function(country) {
+    var filteredCountries = countryArr.filter(function (country) {
       return country.toLowerCase().startsWith(searchValue);
     });
     countryList.innerHTML = "";
-    filteredCountries.forEach(function(country) {
+    filteredCountries.forEach(function (country) {
       var option = document.createElement("option");
       option.value = country;
       countryList.appendChild(option);
@@ -66,41 +103,40 @@ searchBar.addEventListener("input", function(event) {
 });
 
 // submit button event listener for Enter
-searchBar.addEventListener("keydown", function(event) {
+searchBar.addEventListener("keydown", function (event) {
   if (event.key === "Enter") {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
- 
 });
 
 // submit button eventlistener for click
-submitButton.addEventListener("click", function() {
+submitButton.addEventListener("click", function () {
   var searchValue = searchBar.value.trim();
   searchCountry(searchValue);
-  });
+});
 
 //Multi-Step function. Probably would break this down, but had issues with variable scoping
 // First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  var objLocation = countryIdArr.find(function(x) {
-    return x.country === searchValue
-  })
+  var objLocation = countryIdArr.find(function (x) {
+    return x.country === searchValue;
+  });
 
   if (objLocation) {
-    var searchId = objLocation.id;   
+    var searchId = objLocation.id;
   }
-  searchId = searchId.toString()
-// dynamically adds searchId to request URL
-  var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`
+  searchId = searchId.toString();
+  // dynamically adds searchId to request URL
+  var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`;
 
   // requests playlist infor from deezer
   fetch(requestPlaylistUrl)
-    .then(function(response) {
+    .then(function (response) {
       return response.json();
     })
-    .then(function(data) {
+    .then(function (data) {
       console.log(data);
       var playlistChart = document.querySelector("#deezer-songs");
       // for loop to pull top 10 song track info
@@ -115,7 +151,7 @@ function fetchAndRenderPlaylist(searchValue) {
         console.log(songLink);
         var minutes = Math.floor(songDuration / 60).toString();
         var rawSeconds = songDuration % 60;
-        var seconds = rawSeconds.toString().padStart(2, '0');
+        var seconds = rawSeconds.toString().padStart(2, "0");
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
@@ -125,7 +161,7 @@ function fetchAndRenderPlaylist(searchValue) {
         }
 
         // update playlist header
-        var title = document.querySelector('.chart-title');
+        var title = document.querySelector(".chart-title");
         title.textContent = `Top 10 Songs in ${searchValue}`;
 
         // creation of playlist info on page
@@ -139,20 +175,19 @@ function fetchAndRenderPlaylist(searchValue) {
         tdArtist.setAttribute("class", "song-artist");
         var tdLink = document.createElement("td");
         tdLink.setAttribute("class", "song-link");
-        
-        tdName.innerHTML = `${songName}`
-        tdLength.innerHTML = `${songLength}`
-        tdArtist.innerHTML = `${songArtist}`
-        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><img class="sound-on" src="./assets/images/music-note.svg" /></a>`
-       
+
+        tdName.innerHTML = `${songName}`;
+        tdLength.innerHTML = `${songLength}`;
+        tdArtist.innerHTML = `${songArtist}`;
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><img class="sound-on" src="./assets/images/music-note.svg" /></a>`;
 
         playlistChart.appendChild(tr);
         tr.appendChild(tdName);
         tr.appendChild(tdLength);
         tr.appendChild(tdArtist);
         tr.appendChild(tdLink);
-      } 
-    })
+      }
+    });
 }
 
 // adds searchValues to localStorage
@@ -162,18 +197,18 @@ function addToLocalStorage(searchValue) {
     recentSearches.unshift(searchValue);
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
   }
-};
+}
 
 // To update dropdown for recentSearches
 function updateRecentSearches() {
-  var dropdownContent = document.querySelector('.dropdown-content');
-  dropdownContent.innerHTML = '';
+  var dropdownContent = document.querySelector(".dropdown-content");
+  dropdownContent.innerHTML = "";
   var recentSearchesLimited = recentSearches.slice(0, 5);
   for (let i = 0; i < recentSearchesLimited.length; i++) {
     var recentSearch = recentSearchesLimited[i];
-    console.log(link)
-    var link = document.createElement('a');
-    link.classList.add('dropdown-item');
+    console.log(link);
+    var link = document.createElement("a");
+    link.classList.add("dropdown-item");
     link.textContent = recentSearch;
     dropdownContent.appendChild(link);
   }
@@ -182,7 +217,7 @@ function updateRecentSearches() {
 // event listener to activate recent searches dropdown
 var dropdown = document.querySelector(".dropdown");
 dropdown.addEventListener("click", function () {
-  dropdown.classList.toggle('is-active');
+  dropdown.classList.toggle("is-active");
 });
 
 // event listener with delegation to allow clicking on the recent searches
@@ -193,8 +228,7 @@ dropdownContent.addEventListener("click", function (event) {
   console.log(searchValue);
   searchBar.value = searchValue;
   searchCountry(searchValue);
-  });
-  
+});
 
 // API GRABS
 
@@ -205,23 +239,25 @@ dropdownContent.addEventListener("click", function (event) {
 function saveDeezerObjAndCountryArr() {
   var deezerObject;
   if (sessionStorage.getItem("deezerObject") === null) {
-    fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
-      .then(function(response) {
+    fetch(
+      "https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100"
+    )
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         deezerObject = data;
         sessionStorage.setItem("deezerObject", JSON.stringify(data));
       })
-      .then(function(){
+      .then(function () {
         generateCountryArrays();
-      })
+      });
   } else {
     generateCountryArrays();
   }
 }
 
-// this function takes the saved DeezerObject in session storage and manipulates the data. 
+// this function takes the saved DeezerObject in session storage and manipulates the data.
 function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var playlistArr = [];
@@ -229,8 +265,13 @@ function generateCountryArrays() {
   for (let i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
     // filtering for only playlists that are Top Country playlists and grabs those playlist names and their playlist IDs
-    if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
-      playlistArr.unshift(playlistName)
+    if (
+      !playlistName.includes("Songcatcher") &&
+      !playlistName.includes("SongCatcher") &&
+      !playlistName.includes("Worldwide") &&
+      playlistName.includes("Top")
+    ) {
+      playlistArr.unshift(playlistName);
       playlistId.unshift(deezerObject.data[i].id);
     }
   }
@@ -244,7 +285,7 @@ function generateCountryArrays() {
   console.log(countryArr);
   // makes the array of objects that pairs country and id
   for (let z = 0; z < countryArr.length; z++) {
-    var countryIdObj = {"country": countryArr[z], "id": playlistId[z]};
+    var countryIdObj = { country: countryArr[z], id: playlistId[z] };
     countryIdArr.push(countryIdObj);
   }
   console.log(countryIdArr);
@@ -255,131 +296,135 @@ function getLatAndLon(searchValue) {
   lon = Number(countryData[searchValue].lon);
   console.log(lat);
   console.log(lon);
-  return {lat, lon} 
+  return { lat, lon };
 }
 
 // Map API
 
-  //  Map to Display
+//  Map to Display
 
-  require([
-    "esri/Map",
-    "esri/views/SceneView",
-    "esri/layers/FeatureLayer",
-  ], (Map, SceneView, FeatureLayer) => {
-
-    const data = [
-      {
-          lat: 32.727482,
-          lon: -117.1560632,
-          name: "Automotive Museum",
+require(["esri/Map", "esri/views/SceneView", "esri/layers/FeatureLayer"], (
+  Map,
+  SceneView,
+  FeatureLayer
+) => {
+  const data = [
+    {
+      lat: "42.546245",
+      lon: "1.601554",
+      lat: 32.727482,
+      lon: -117.1560632,
+      name: "Automotive Museum",
+    },
+  ];
+  for (i = 0; i < 5; i++) {
+    myCoords = getLatAndLon(countryArr[i]);
+    // console.log(countryArr[i]);
+    console.log(myCoords);
+    lat = myCoords[1];
+    lon = myCoords[1];
+  }
+  const featureLayer = new FeatureLayer({
+    outFields: ["*"],
+    source: data.map((d, i) => ({
+      geometry: {
+        type: "point",
+        longitude: d.lon,
+        latitude: d.lat,
       },
-    ];
+      attributes: {
+        ObjectID: i,
+        ...d,
+      },
+    })),
+    objectIdField: "ObjectID",
+    geometryType: "point",
+    renderer: {
+      type: "simple",
+      symbol: {
+        type: "text",
+        color: "white",
+        text: "\ue6a2",
+        font: {
+          size: 30,
+          family: "CalciteWebCoreIcons",
+        },
+      },
+    },
+  });
 
-    const featureLayer = new FeatureLayer({
-      outFields: ["*"],
-      source: data.map((d, i) => (
+  const map = new Map({
+    basemap: "dark-gray-vector",
+    layers: [featureLayer], // loads layer with all of the markers
+  });
+
+  const view = new SceneView({
+    container: "viewDiv",
+    map: map,
+    center: [1000, 20],
+    ui: {
+      components: ["attribution"],
+    },
+  });
+  view.ui._removeComponents(["attribution"]); // removes footer
+  // disable all zooming options below
+  view.on("mouse-wheel", function (event) {
+    event.stopPropagation();
+  });
+  view.on("double-click", function (event) {
+    event.stopPropagation();
+  });
+  view.on("double-click", ["Control"], function (event) {
+    event.stopPropagation();
+  });
+  view.on("mouse-wheel", function (event) {
+    // prevents zooming with the mouse-wheel event
+    event.stopPropagation();
+  });
+
+  // location finders below
+  // COORDINATES TO BOUNCE TO are lat and lon
+
+  function customEasing(t) {
+    return (
+      1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10)
+    );
+  }
+
+  // document.getElementById("bounceBerlin").addEventListener("click", () => {
+  window.mapZoom = function (lat, lon) {
+    view
+      .goTo(
         {
-            geometry: {
-                type: "point",
-                longitude: d.lon,
-                latitude: d.lat
+          position: {
+            x: lon,
+            y: lat,
+            z: 5000000,
+            spatialReference: {
+              wkid: 4326,
             },
-            attributes: {
-                ObjectID: i,
-                ...d
-            }
-        }
-      )),
-      objectIdField: "ObjectID",
-      geometryType: "point",
-      renderer: {
-        type: "simple",
-        symbol: {
-            type: "text",
-            color: "white",
-            text: "\ue6a2",
-            font: {
-                size: 30,
-                family: "CalciteWebCoreIcons"
-            }
-        }
-      },
-    });
-
-    const map = new Map({
-      basemap: "dark-gray-vector",
-      layers: [featureLayer], // loads layer with all of the markers
-    });
-
-    const view = new SceneView({
-      container: "viewDiv",
-      map: map,
-      center: [1000, 20],
-      ui: {
-        components: ["attribution"]
-      }
-    });
-    view.ui._removeComponents(["attribution"]); // removes footer
-    // disable all zooming options below
-    view.on("mouse-wheel", function(event) {
-      event.stopPropagation();
-    });
-    view.on("double-click", function(event) {
-      event.stopPropagation();
-    });
-    view.on("double-click", ["Control"], function(event) {
-      event.stopPropagation();
-    });
-    view.on("mouse-wheel", function(event){
-      // prevents zooming with the mouse-wheel event
-      event.stopPropagation();
-    });
-
-    // location finders below
-    // COORDINATES TO BOUNCE TO are lat and lon
-
-    function customEasing(t) {
-      return 1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10);
-    }
-
-    // document.getElementById("bounceBerlin").addEventListener("click", () => {
-    window.mapZoom = function(lat, lon) {
-
-      view
-        .goTo(
-          {
-            position: {
-              x: lon,
-              y: lat,
-              z: 5000000,
-              spatialReference: {
-                wkid: 4326
-              }
-            },
-            heading: 0,
-            tilt: 0
           },
-          {
-            speedFactor: 0.8,
-            easing: customEasing
-          }
-        )
-        .catch(function(error) {
+          heading: 0,
+          tilt: 0,
+        },
+        {
+          speedFactor: 0.8,
+          easing: customEasing,
+        }
+      )
+      .catch(function (error) {
         if (error.name != "AbortError") {
-           console.error(error);
+          console.error(error);
         }
       });
-    }
-  });
-  
-  
-  // USER INTERACTIONS
-    // search bar – event listener
-    // recent searches – event listener
-  
-  
-  // INITIALIZATION
-    // on page load map appears and form appears
-    // once local storage, recent searches appears
-    // Chart appears on searech (map zoom)
+  };
+});
+
+// USER INTERACTIONS
+// search bar – event listener
+// recent searches – event listener
+
+// INITIALIZATION
+// on page load map appears and form appears
+// once local storage, recent searches appears
+// Chart appears on searech (map zoom)
