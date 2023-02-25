@@ -40,10 +40,6 @@ h2 {
     text-align: center;
 }
 
-.control {
-    padding-top: 12px;
-}
-
 .table {
     margin: auto;
 }
@@ -88,7 +84,7 @@ tr {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding-right: 12px;
+    padding: 12px 12px 0px 0px;
 }
 
 .text {
