@@ -270,8 +270,8 @@ function getLatAndLon(searchValue) {
 
     const data = [
       {
-          lat: 32.727482,
-          lon: -117.1560632,
+          lat: 10,
+          lon: -117,
           name: "Automotive Museum",
       },
     ];
