@@ -16,12 +16,9 @@ window.onload = function() {
   updateRecentSearches();
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
-  saveDeezerObjAndCountryArr();
+  // also calls the map and creates the markers
+  fetchFromDeezerAndLoadFullMap();
 
-  // adds map markers
-  mapMarkers();
-
-  loadMap();
 }
 
 function searchCountry(searchValue) {
@@ -217,7 +214,7 @@ dropdownContent.addEventListener("click", function (event) {
 // Deezer
 
 // this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
-function saveDeezerObjAndCountryArr() {
+function fetchFromDeezerAndLoadFullMap() {
   var deezerObject;
   if (sessionStorage.getItem("deezerObject") === null) {
     fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
@@ -230,9 +227,13 @@ function saveDeezerObjAndCountryArr() {
       })
       .then(function(){
         generateCountryArrays();
+        mapMarkers();
+        loadMap();
       })
   } else {
     generateCountryArrays();
+    mapMarkers();
+    loadMap();
   }
 }
 
