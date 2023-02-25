@@ -103,6 +103,16 @@ function fetchAndRenderPlaylist(searchValue) {
     .then(function(data) {
       console.log(data);
       var playlistChart = document.querySelector("#deezer-songs");
+
+      var thead = document.querySelector(".playlist-header");
+      thead.innerHTML = 
+      `<tr>
+        <th>Song</th>
+        <th>Duration</th>
+        <th>Artist</th>
+        <th>Link</th>
+      </tr>`
+      
       // for loop to pull top 10 song track info
       for (let i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
