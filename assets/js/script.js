@@ -265,6 +265,7 @@ function generateCountryArrays() {
   console.log(countryIdArr);
 }
 
+// gets individual lat and lons as numbers
 function getLatAndLon(searchValue) {
   lat = Number(countryData[searchValue].lat);
   lon = Number(countryData[searchValue].lon);
@@ -272,6 +273,21 @@ function getLatAndLon(searchValue) {
   console.log(lon);
   return {lat, lon} 
 }
+
+// creates array of all objects for map markers
+function mapMarkers() {
+  for (i = 0; i < countryArr.length; i++) {
+    var myCoords = getLatAndLon(countryArr[i]);
+    let lat = myCoords.lat;
+    let lon = myCoords.lon;
+    let name = countryArr[i];
+
+    let countryObj = {lat, lon, name}
+    countryObjArr.push(countryObj);
+  }
+  console.log(countryObjArr);
+}
+
 
 // Map API
 let countryObjArr = [];
@@ -308,7 +324,7 @@ function loadMap() {
             color: "white",
             text: "\ue6a2",
             font: {
-                size: 30,
+                size: 10,
                 family: "CalciteWebCoreIcons"
             }
         }
@@ -381,20 +397,6 @@ function loadMap() {
     }
   });
 }
-    window.mapMarkers = function() {
-
-      for (i = 0; i < countryArr.length; i++) {
-        var myCoords = getLatAndLon(countryArr[i]);
-        let lat = myCoords.lat;
-        let lon = myCoords.lon;
-        let name = countryArr[i];
-
-        let countryObj = {lat, lon, name}
-        countryObjArr.push(countryObj);
-      }
-      console.log(countryObjArr);
-
-    }
 
 
   
