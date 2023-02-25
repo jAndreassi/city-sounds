@@ -9,6 +9,7 @@ var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
 
 var countryArr = [];
 var countryIdArr = [];
+var countryObjArr = [];
 
 window.onload = function() {
   // on page load, renders LocalStorage
@@ -16,6 +17,11 @@ window.onload = function() {
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
   saveDeezerObjAndCountryArr();
+
+  // adds map markers
+  mapMarkers();
+
+  loadMap();
 }
 
 function searchCountry(searchValue) {
@@ -210,7 +216,6 @@ dropdownContent.addEventListener("click", function (event) {
 
 // Deezer
 
-// fetch('https://cors-proxy3.p.rapidapi.com/api', options)
 // this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
 function saveDeezerObjAndCountryArr() {
   var deezerObject;
@@ -260,6 +265,7 @@ function generateCountryArrays() {
   console.log(countryIdArr);
 }
 
+// gets individual lat and lons as numbers
 function getLatAndLon(searchValue) {
   lat = Number(countryData[searchValue].lat);
   lon = Number(countryData[searchValue].lon);
@@ -268,27 +274,34 @@ function getLatAndLon(searchValue) {
   return {lat, lon} 
 }
 
+// creates array of all objects for map markers
+function mapMarkers() {
+  for (i = 0; i < countryArr.length; i++) {
+    var myCoords = getLatAndLon(countryArr[i]);
+    let lat = myCoords.lat;
+    let lon = myCoords.lon;
+    let name = countryArr[i];
+
+    let countryObj = {lat, lon, name}
+    countryObjArr.push(countryObj);
+  }
+  console.log(countryObjArr);
+}
+
+
 // Map API
 
-  //  Map to Display
-
+//  Map to Display
+function loadMap() {
   require([
     "esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
   ], (Map, SceneView, FeatureLayer) => {
 
-    const data = [
-      {
-          lat: 10,
-          lon: -117,
-          name: "Automotive Museum",
-      },
-    ];
-
     const featureLayer = new FeatureLayer({
       outFields: ["*"],
-      source: data.map((d, i) => (
+      source: countryObjArr.map((d, i) => (
         {
             geometry: {
                 type: "point",
@@ -310,7 +323,7 @@ function getLatAndLon(searchValue) {
             color: "white",
             text: "\ue6a2",
             font: {
-                size: 30,
+                size: 10,
                 family: "CalciteWebCoreIcons"
             }
         }
@@ -382,7 +395,9 @@ function getLatAndLon(searchValue) {
       });
     }
   });
-  
+}
+
+
   
   // USER INTERACTIONS
     // search bar – event listener
