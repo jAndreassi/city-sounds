@@ -1,4 +1,4 @@
-# Template Repo
+# CitySounds
 
 ![CitySounds logo](./assets/images/city-sounds.png)
 
@@ -10,14 +10,9 @@ In the beginning, our goal was to create an impressive end product that we could
 
 Despite realizing we could not add every bell and whistle we originally wanted, our team is proud to deliver the final app we have. CitySounds allows people to search by country for the top ten songs in 69 nations with a sleek, easy to navigate user interface. 
 
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
-
 ## Installation 
 
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
+To use this app, please [click here](https://cors-anywhere.herokuapp.com/corsdemo) to initialize our temporary proxy server. This will enable access to Deezer's (our music API's) data!
 
 ## Usage
 
