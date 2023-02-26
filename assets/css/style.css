@@ -1,5 +1,9 @@
 /* css */
-html,
+html {
+    height: 100%;
+        background-image: linear-gradient(rgb(241, 244, 246), rgb(206, 230, 245), rgb(161, 186, 246));
+        opacity: 0.85;
+}
 body,
 main,
 #map-container,
@@ -90,6 +94,7 @@ width: 50px;
 }
 
 .navbar-brand {
+    background-color: rgb(241, 244, 246);
     display: flex;
     justify-content: space-between;
     width: 100vw; /* need to classify width to stop bulma responsiveness from breaking the flex */
