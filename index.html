@@ -12,16 +12,23 @@
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-    <!-- <link rel="stylesheet" href="styles/debug.css"> -->
-    <link rel="stylesheet" href="./assets/css/style.css" />
+    
     <!-- Load fonts here -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- earlier song link icon -->
+    <link href="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-sound-icon-image_1198529.jpg">
 
+    <!-- Load icons here -->
+    <script defer src="https://use.fontawesome.com/releases/v6.3.0/js/all.js"></script>
     <!-- loads map here, still need to work on size -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css" />
     <script src="https://js.arcgis.com/4.26/"></script>
+
+    <!-- <link rel="stylesheet" href="styles/debug.css"> -->
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
 
   <body>
@@ -32,67 +39,47 @@
           <a class="navbar-item">
             <img
               class="logo"
-              src="./assets/images/city-sounds.png"
+              src="./assets/images/city-sounds-logo.png"
               alt="City Sounds Logo"
-              width="175"
-              height="30" />
+            />
+            <img
+              class="text"
+              src="./assets/images/city-sounds-text.png"
+              alt="City Sounds Text"
+              width="125px"
+          />
           </a>
 
-              <!-- search input & button -->
-          <div class="field has-addons">
-            <div class="control">
-              <input class="input search-bar is-rounded" type="text" placeholder="Find song by country" list="countryList"> <datalist id="countryList"></datalist>
-            </div>
-            <div class="control">
-              <a class="button submit-btn is-rounded is-info">
-                Search
-              </a>
-            </div>
-          </div>
-
-          <div class="dropdown">
-            <div class="dropdown-trigger">
-              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                <span>Recent Searches</span>
-                <span class="icon is-small">
-                  <i class="fas fa-angle-down" aria-hidden="true"></i>
-                </span>
-              </button>
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu" role="menu">
-              <div class="dropdown-content">
-                <div class="dropdown-item"> Recent Searches</a>
-              
-                <!-- </div>
-                <div id="recent-search" class="dropdown-item">
-                  <p></p>
-                </div>
-                <hr class="dropdown-divider">
-                <div class="dropdown-item">
-                  <p>Note: add a <code>&lt;div&gt;</code> with class="dropdown-item" if you want to add more items.</p>
-                </div>
-                <hr class="dropdown-divider">
-                <a href="#" class="dropdown-item">
-                  This is a link in case we wanted to add one
-                </a> -->
-                <!-- Only show the 5 most recent searches in the dropdown -->
-                <a href="#" class="dropdown-item"></a>
-                <a href="#" class="dropdown-item"></a>
-                <a href="#" class="dropdown-item"></a>
-                <a href="#" class="dropdown-item"></a>
-                <a href="#" class="dropdown-item"></a>
-                <!-- Show the rest of the recent searches in a scrollable menu -->
-                <div class="dropdown-content"></div>
+          <!-- search input & button -->
+          <section class="navbar-right">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input search-bar is-rounded" type="text" placeholder="Find song by country" list="countryList"> <datalist id="countryList"></datalist>
+              </div>
+              <div class="control">
+                <a class="button submit-btn is-rounded is-info">
+                  Search
+                </a>
               </div>
             </div>
-          </div>
 
-          
+            <div class="dropdown is-right">
+              <div class="dropdown-trigger">
+                <button class="button is-static" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <span class="icon"><i class="fa-solid fa-clock-rotate-left"></i></span>
+                  <!-- <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span> -->
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </nav>
-
-      <!-- empty div tag that will receive recent-searches dropdown -->
-      <div class="recent-searches"></div>
     </header>
 
     <main>
@@ -103,21 +90,15 @@
 
       <section class="location-playlist">
         <!-- playlists to generate in this spot -->
-        <div class="container is-centered">
+        <div class="container is-centered" id="absolute">
           <div>
-            <h2 class="chart-title">Top 10 Songs in <span id="input"></span></h2>
+            <h1 class="chart-title">Search by Country to Discover Top Songs</h1>
           </div>
           <table class="table">
-            <thead>
-              <tr>
-                <th>Song Title</th>
-                <th>Duration</th>
-                <th>Artist</th>
-                <th>Link to Song</th>
-              </tr>
+            <thead class="playlist-header">
             </thead>
-            <tbody>
-              <tr id="deezer-songs"></tr>
+            </div>
+            <tbody id="deezer-songs">
             </tbody>
           </table>
         </div>
@@ -132,5 +113,6 @@
     <!-- map only works without deezer library -->
     <!-- <script src="https://e-cdn-files.dzcdn.net/js/min/dz.js"></script> -->
     <script src="./assets/js/script.js"></script>
+    <script src="./assets/js/countryData.js"></script>
   </body>
 </html>

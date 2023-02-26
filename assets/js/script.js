@@ -1,34 +1,23 @@
 // DEPENDENCIES (DOM Elements)
 // DATA / STATE / GLOBAL VARIABLES
 
-
-
 // FUNCTIONS
 
 var searchBar = document.querySelector(".search-bar");
 var submitButton = document.querySelector(".submit-btn");
-var recentSearchesDropdown = document.querySelector(".dropdown-trigger");
 var recentSearches = JSON.parse(localStorage.getItem("recentSearches")) || [];
-// var countries = [
-//   "Japan",
-//   "Germany",
-//   "Russia",
-//   "China",
-//   "Colombia",
-//   "America",
-//   "Poland",
-//   "Nigeria"
-// ];
 
 var countryArr = [];
 var countryIdArr = [];
+var countryObjArr = [];
 
 window.onload = function() {
   // on page load, renders LocalStorage
   updateRecentSearches();
 
   // on page load, either fetches from Deezer API, or stores its object in sessionStorage and creates countryArr and countryIdArr
-  saveDeezerObjAndCountryArr();
+  // also calls the map and creates the markers
+  fetchFromDeezerAndLoadFullMap();
 
 }
 
@@ -37,10 +26,7 @@ function searchCountry(searchValue) {
   if (!searchValue || !countryArr.includes(searchValue)) {
     return;
   }
-  // // move Map to queried country
-  // mapZoom(searchValue);
-
-  // // query Deezer for playlist associated with country and render on page
+  // query Deezer for playlist associated with country and render on page
   fetchAndRenderPlaylist(searchValue);
 
   // save query to local storage
@@ -48,16 +34,17 @@ function searchCountry(searchValue) {
 
   // adds new localStorage to dropDown
   updateRecentSearches();
+
+  // gets latitude and longitude for queried countries
+  var latLonObj = getLatAndLon(searchValue);
+  console.log(latLonObj);
+
+  // move Map to queried country
+  mapZoom(latLonObj.lat, latLonObj.lon);
 }
+
 var searchBar = document.querySelector(".search-bar");
 var countryList = document.getElementById("countryList");
-
-// // create datalist element with countryArr
-// for (var i = 0; i < countryArr.length; i++) {
-//   var option = document.createElement("option");
-//   option.value = countryArr[i];
-//   countryList.appendChild(option);
-// }
 
 // // set datalist to searchBar
 searchBar.setAttribute("list", "countryList");
@@ -95,45 +82,41 @@ submitButton.addEventListener("click", function() {
   searchCountry(searchValue);
   });
 
-// event listener for recent search dropdown
-recentSearchesDropdown.addEventListener("click", function(event) {
-  var recentSearch = event.target.textContent;
-  searchCountry(recentSearch);
-});
-
-
-// to be defined
-function mapZoom(searchValue) {
-  console.log(searchValue);
-}
-
-// searches the countryIdArr to find the id for the appropriate playlist from the searchValue
+//Multi-Step function. Probably would break this down, but had issues with variable scoping
+// First searches the countryIdArr to find the id for the appropriate playlist from the searchValue
 function fetchAndRenderPlaylist(searchValue) {
-  // fetchPlaylistId(searchValue);
-
-  fetchDeezerPlaylistInfo(fetchPlaylistId(searchValue));
-}
-
-function fetchPlaylistId(searchValue) {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
   var objLocation = countryIdArr.find(function(x) {
     return x.country === searchValue
   })
 
   if (objLocation) {
-    var searchId = objLocation.id;
+    var searchId = objLocation.id;   
   }
-  console.log(searchId);
-}
+  searchId = searchId.toString()
+// dynamically adds searchId to request URL
+  var requestPlaylistUrl = `https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${searchId}`
 
-function fetchDeezerPlaylistInfo(id) {
-  fetch(`https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/${id}`)
+  // requests playlist infor from deezer
+  fetch(requestPlaylistUrl)
     .then(function(response) {
       return response.json();
     })
     .then(function(data) {
       console.log(data);
-      for (i = 0; i < 10; i++) {
+      var playlistChart = document.querySelector("#deezer-songs");
+
+      var thead = document.querySelector(".playlist-header");
+      thead.innerHTML = 
+      `<tr>
+        <th>Song</th>
+        <th>Duration</th>
+        <th>Artist</th>
+        <th>Link</th>
+      </tr>`
+      
+      // for loop to pull top 10 song track info
+      for (let i = 0; i < 10; i++) {
         var songName = data.tracks.data[i].title;
         var songDuration = data.tracks.data[i].duration;
         var songArtist = data.tracks.data[i].artist.name;
@@ -142,15 +125,47 @@ function fetchDeezerPlaylistInfo(id) {
         console.log(songDuration);
         console.log(songArtist);
         console.log(songLink);
-        var minutes = Math.floor(songDuration / 60);
-        var seconds = songDuration % 60;
+        var minutes = Math.floor(songDuration / 60).toString();
+        var rawSeconds = songDuration % 60;
+        var seconds = rawSeconds.toString().padStart(2, '0');
         var songLength = `${minutes}:${seconds}`;
         console.log(songLength);
 
-      }
-  })
-}
+        // if statement to check if playlist chart needs to be erased on first iteration
+        if (playlistChart.innerHTML.trim() !== "" && i === 0) {
+          playlistChart.innerHTML = "";
+        }
 
+        // update playlist header
+        var title = document.querySelector('.chart-title');
+        title.textContent = `Top 10 Songs in ${searchValue}`;
+
+        // creation of playlist info on page
+        var tr = document.createElement("tr");
+        tr.setAttribute("class", "hover-effect");
+        var tdName = document.createElement("td");
+        tdName.setAttribute("class", "song-name");
+        var tdLength = document.createElement("td");
+        tdLength.setAttribute("class", "song-duration");
+        var tdArtist = document.createElement("td");
+        tdArtist.setAttribute("class", "song-artist");
+        var tdLink = document.createElement("td");
+        tdLink.setAttribute("class", "song-link");
+        
+        tdName.innerHTML = `${songName}`
+        tdLength.innerHTML = `${songLength}`
+        tdArtist.innerHTML = `${songArtist}`
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-headphones"></i></a>`
+       
+
+        playlistChart.appendChild(tr);
+        tr.appendChild(tdName);
+        tr.appendChild(tdLength);
+        tr.appendChild(tdArtist);
+        tr.appendChild(tdLink);
+      } 
+    })
+}
 
 // adds searchValues to localStorage
 function addToLocalStorage(searchValue) {
@@ -161,14 +176,14 @@ function addToLocalStorage(searchValue) {
   }
 };
 
-// To eventually update dropdown for recentSearches – this is re-rendering all of them everytime this is called I think, which may be fine, especially if we are eventually limiting the number.
-// Should add a check to make sure that it's not currently in the local storage maybe? So we don't get multiple of the same search?
+// To update dropdown for recentSearches
 function updateRecentSearches() {
   var dropdownContent = document.querySelector('.dropdown-content');
   dropdownContent.innerHTML = '';
   var recentSearchesLimited = recentSearches.slice(0, 5);
-  for (var i = 0; i < recentSearchesLimited.length; i++) {
+  for (let i = 0; i < recentSearchesLimited.length; i++) {
     var recentSearch = recentSearchesLimited[i];
+    console.log(link)
     var link = document.createElement('a');
     link.classList.add('dropdown-item');
     link.textContent = recentSearch;
@@ -176,58 +191,29 @@ function updateRecentSearches() {
   }
 }
 
-document.addEventListener("click", function (event) {
-  var dropdownTrigger = document.querySelector(".dropdown-trigger");
-  var dropdownMenu = document.querySelector("#dropdown-trigger");
-  if (
-    !dropdownTrigger.contains(event.target) &&
-    !dropdownMenu.contains(event.target)
-  ) {
-    dropdownMenu.classList.remove("is-active");
-  }
+// event listener to activate recent searches dropdown
+var dropdown = document.querySelector(".dropdown");
+dropdown.addEventListener("click", function () {
+  dropdown.classList.toggle('is-active');
 });
 
-var dropdownItems = document.querySelectorAll(".dropdown-item");
-dropdownItems.forEach(function (item) {
-  item.addEventListener("click", function (event) {
-    dropdownMenu.classList.remove("is-active");
+// event listener with delegation to allow clicking on the recent searches
+var dropdownContent = document.querySelector(".dropdown-content");
+dropdownContent.addEventListener("click", function (event) {
+  var searchValue = event.target.textContent;
+  console.log(event.target);
+  console.log(searchValue);
+  searchBar.value = searchValue;
+  searchCountry(searchValue);
   });
-});
-
-
-
-
-
-
+  
 
 // API GRABS
 
-  // Deezer
+// Deezer
 
-  // Testing Deezer API
-
-// CORS Proxy Server Using Rapid API
-// deezerPlaylistUrl = "https://api.deezer.com/user/637006841/playlists&limit=100";
-
-// const encodedParams = new URLSearchParams();
-// encodedParams.append("my-url", deezerPlaylistUrl);
-
-// const options = {
-//   method: 'POST',
-//   headers: {
-//     'content-type': 'application/x-www-form-urlencoded',
-//     'X-RapidAPI-Key': '492bbad1e0msh127b51cb43ca626p106abejsn53757b96005b',
-//     'X-RapidAPI-Host': 'cors-proxy3.p.rapidapi.com'
-//   },
-//   body: encodedParams
-// };
-
-// getting Array of countries 
-
-
-// fetch('https://cors-proxy3.p.rapidapi.com/api', options)
 // this function check if the deezer API data is stored in session Storage. If not it fetches it and then calls the generate CountryArrays function, if so, it just calls the same function
-function saveDeezerObjAndCountryArr() {
+function fetchFromDeezerAndLoadFullMap() {
   var deezerObject;
   if (sessionStorage.getItem("deezerObject") === null) {
     fetch("https://cors-anywhere.herokuapp.com/https://api.deezer.com/user/637006841/playlists&limit=100")
@@ -240,27 +226,27 @@ function saveDeezerObjAndCountryArr() {
       })
       .then(function(){
         generateCountryArrays();
+        mapMarkers();
+        loadMap();
       })
   } else {
     generateCountryArrays();
+    mapMarkers();
+    loadMap();
   }
 }
 
 // this function takes the saved DeezerObject in session storage and manipulates the data. 
 function generateCountryArrays() {
   deezerObject = JSON.parse(sessionStorage.getItem("deezerObject"));
-  console.log(deezerObject);
-  console.log(deezerObject.data);
   var playlistArr = [];
   var playlistId = [];
-  for (i = 0; i < deezerObject.data.length; i++) {
+  for (let i = 0; i < deezerObject.data.length; i++) {
     var playlistName = deezerObject.data[i].title;
     // filtering for only playlists that are Top Country playlists and grabs those playlist names and their playlist IDs
     if (!playlistName.includes("Songcatcher") && !playlistName.includes("SongCatcher") && !playlistName.includes("Worldwide") && playlistName.includes("Top")) {
       playlistArr.unshift(playlistName)
       playlistId.unshift(deezerObject.data[i].id);
-      console.log(playlistArr);
-      console.log(playlistId);
     }
   }
   // filters the playlist names and makes an array of just country names
@@ -279,36 +265,43 @@ function generateCountryArrays() {
   console.log(countryIdArr);
 }
 
+// gets individual lat and lons as numbers
+function getLatAndLon(searchValue) {
+  lat = Number(countryData[searchValue].lat);
+  lon = Number(countryData[searchValue].lon);
+  console.log(lat);
+  console.log(lon);
+  return {lat, lon} 
+}
+
+// creates array of all objects for map markers
+function mapMarkers() {
+  for (i = 0; i < countryArr.length; i++) {
+    var myCoords = getLatAndLon(countryArr[i]);
+    let lat = myCoords.lat;
+    let lon = myCoords.lon;
+    let name = countryArr[i];
+
+    let countryObj = {lat, lon, name}
+    countryObjArr.push(countryObj);
+  }
+  console.log(countryObjArr);
+}
+
 
 // Map API
 
-  //  Map to Display
-
+//  Map to Display
+function loadMap() {
   require([
     "esri/Map",
     "esri/views/SceneView",
     "esri/layers/FeatureLayer",
   ], (Map, SceneView, FeatureLayer) => {
-    // const featureLayer = new FeatureLayer({
-    //   outFields: ["STATION_NAME", "COUNTRY", "TEMP"],
-    //   portalItem: {
-    //     // autocasts as new PortalItem()
-    //     id: "3a177da3f6524d61980fb41125b2349c"
-    //   },
-    //   title: "Temperature on Jan, 4, 2017"
-    // });
-
-    const data = [
-      {
-          lat: 32.727482,
-          lon: -117.1560632,
-          name: "Automotive Museum",
-      },
-    ];
 
     const featureLayer = new FeatureLayer({
       outFields: ["*"],
-      source: data.map((d, i) => (
+      source: countryObjArr.map((d, i) => (
         {
             geometry: {
                 type: "point",
@@ -330,32 +323,81 @@ function generateCountryArrays() {
             color: "white",
             text: "\ue6a2",
             font: {
-                size: 30,
+                size: 10,
                 family: "CalciteWebCoreIcons"
             }
         }
-    },
+      },
     });
 
     const map = new Map({
       basemap: "dark-gray-vector",
-      layers: [featureLayer], // dots layer
+      layers: [featureLayer], // loads layer with all of the markers
     });
 
     const view = new SceneView({
       container: "viewDiv",
       map: map,
-      center: [1000 , 20],
+      center: [1000, 20],
       ui: {
         components: ["attribution"]
       }
     });
+    view.ui._removeComponents(["attribution"]); // removes footer
+    // disable all zooming options below
+    view.on("mouse-wheel", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", function(event) {
+      event.stopPropagation();
+    });
+    view.on("double-click", ["Control"], function(event) {
+      event.stopPropagation();
+    });
+    view.on("mouse-wheel", function(event){
+      // prevents zooming with the mouse-wheel event
+      event.stopPropagation();
+    });
+
+    // location finders below
+    // COORDINATES TO BOUNCE TO are lat and lon
+
+    function customEasing(t) {
+      return 1 - Math.abs(Math.sin(-1.7 + t * 1 * Math.PI)) * Math.pow(0.5, t * 10);
+    }
+
+    // document.getElementById("bounceBerlin").addEventListener("click", () => {
+    window.mapZoom = function(lat, lon) {
+
+      view
+        .goTo(
+          {
+            position: {
+              x: lon,
+              y: lat,
+              z: 5000000,
+              spatialReference: {
+                wkid: 4326
+              }
+            },
+            heading: 0,
+            tilt: 0
+          },
+          {
+            speedFactor: 0.8,
+            easing: customEasing
+          }
+        )
+        .catch(function(error) {
+        if (error.name != "AbortError") {
+           console.error(error);
+        }
+      });
+    }
   });
+}
 
-  //  Maps Markers
 
-  
-  
   
   // USER INTERACTIONS
     // search bar – event listener
