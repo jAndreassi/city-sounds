@@ -30,17 +30,20 @@ If your README is long, add a table of contents to make it easy for users to fin
 - [Credits](#credits)
 - [License](#license)
 
-## Installation
+## Installation 
 
 What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
 
 ## Usage
 
-Provide instructions and examples for use. Include screenshots as needed.
+Before using this application, please [click here](https://cors-anywhere.herokuapp.com/corsdemo) initialize our proxy server in order to access Deezer's (our music API's) data!
 
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative file path, add it to your README using the following syntax:
+Upon the landing page loading, simply type a country name into the search bar in the top right corner. Click the autofill option, then click search Clicking search will show you the current top ten songs in that country!
 
-![alt text](assets/images/screenshot.png)
+To view the top ten songs from a country you have previously searched, click the recent searches icon  ![rewinding clock](./assets/images/rewinding-clock.png)  in the upper right corner.
+
+![CitySounds landing page](./assets/images/city-sounds-homepage.png)
+![CitySounds top ten songs and recent searches](./assets/images/city-sounds-recent-searches.png)
 
 ## Credits
 
