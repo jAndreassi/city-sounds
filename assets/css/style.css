@@ -126,8 +126,12 @@ tr {
 }
 
 td:hover {
-    /* overflow: scroll; */
+    overflow: auto;
     text-overflow:initial;
+}
+
+td:hover::-webkit-scrollbar {
+    display: none;
 }
 
 @media (max-width: 575px) {
