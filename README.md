@@ -6,9 +6,9 @@
 
 Our team's motivation for creating this application was to apply a culmination of our knowledge thus far in our bootcamp. That includes HTML, CSS, JavaScript, third-party APIs, and most recently, Git. Each team member wanted to exercise their strengths and improve upon other skills. All of us used this project as an opportunity for teach-backs and, in turn, to learn more about areas of programming that we haven't explored deeply yet. 
 
-In the beginning, our goal was to create an impressive end product that we could realistically use and be proud to display in our portfolios. The process of brainstorming, planning, and developing our app was important in our decidion making process. We decided that it was much better to deliver a polished MVP that we could knowingly develop given the time constraints, than overshoot our goal for the time and resources currently available to us. We gained invaluable experience working in Github collaboratively, using Git to push code made in branches, pull from the main repo, and merge pull requests to remain in sync with one another. Throughout development, we learned the importance of communication. While a team member works on one function, another person's area of the application may depend on variables defined in that function. Changing even the smallest lines of code could have large scale impacts. Each of us learned about different areas of coding from various team members. 
+In the beginning, our goal was to create an intricate end product that we could realistically use and be proud to display in our portfolios. The process of brainstorming, planning, and developing our app was important in our decidion making process. We decided that it was preferable to deliver a polished MVP that we could knowingly develop, than overshoot our goal given our time and resource constraints. We gained invaluable experience working in Github collaboratively, using Git to push code made in branches, pull from the main repo, and synchronously merge pull requests as a team. Throughout development, we learned the importance of communication. While one team member works on a function, another person's area of the application may depend on variables defined in that function. Changing even the smallest lines of code could have large scale impacts. Each of us also learned about different areas of coding from various team members. 
 
-Despite realizing we could not add every bell and whistle we originally wanted, our team is proud to deliver the [final app](https://jandreassi.github.io/city-sounds/) we have. CitySounds allows people to search by country for the top ten songs in 69 nations with a sleek, easy to navigate user interface. 
+Despite realizing we could not add every bell and whistle we originally wanted, our team is proud to deliver the final app we have. [CitySounds](https://jandreassi.github.io/city-sounds/) allows people to search by country for the top ten songs in 69 nations with a sleek, easy to navigate user interface. 
 
 ## Installation 
 
@@ -20,7 +20,7 @@ To use this app, please [click here](https://cors-anywhere.herokuapp.com/corsdem
 
 Before using this application, please [click here](https://cors-anywhere.herokuapp.com/corsdemo) to initialize our temporary proxy server in order to access Deezer's (our music API's) data!
 
-Upon the landing page loading, simply type a country name into the search bar in the top right corner. Click the autofill option, then click search Clicking search will show you the current top ten songs in that country!
+Upon the landing page loading, simply type a country name into the search bar in the top right corner. Click the autofill option, then click search, which will show you the current top ten songs in that country!
 
 To view the top ten songs from a country you have previously searched, click the recent searches icon  ![rewinding clock](./assets/images/rewinding-clock.png)  in the upper right corner.
 
