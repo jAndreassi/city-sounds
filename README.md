@@ -15,22 +15,13 @@ Despite realizing we could not add every bell and whistle we originally wanted, 
 - What problem does it solve?
 - What did you learn?
 
-## Table of Contents (Optional)
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
 ## Installation 
 
 What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
 
 ## Usage
 
-Before using this application, please [click here](https://cors-anywhere.herokuapp.com/corsdemo) initialize our proxy server in order to access Deezer's (our music API's) data!
+Before using this application, please [click here](https://cors-anywhere.herokuapp.com/corsdemo) to initialize our temporary proxy server in order to access Deezer's (our music API's) data!
 
 Upon the landing page loading, simply type a country name into the search bar in the top right corner. Click the autofill option, then click search Clicking search will show you the current top ten songs in that country!
 
@@ -56,21 +47,3 @@ If you followed tutorials, include links to those here as well.
 ## License
 
 Please see the repo for license info.
-
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/nielsenjared/badmath)
-
-Badges aren't necessary, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
-
-## Features
-
-If your project has a lot of features, list them here.
-
-## How to Contribute
-
-If you created an application or package and would like other developers to contribute to it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
-
-## Tests
-
-Go the extra mile and write tests for your application. Then provide examples on how to run them here.
