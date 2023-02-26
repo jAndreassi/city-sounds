@@ -47,8 +47,13 @@ To view the top ten songs from a country you have previously searched, click the
 
 ## Credits
 
-[![forthebadge](https://forthebadge.com/images/badges/uses-badges.svg)](https://forthebadge.com)
-List your collaborators, if any, with links to their GitHub profiles.
+![Contributors to CitySounds](./assets/images/contributors.png)
+
+Find each group member's github link below:
+
+[Elias Spector-Zabusky](https://github.com/ColdWeatherBoyy), [Colin Sprows](https://github.com/ColinSprows), [Liza Parr](https://github.com/lparr30), [Joseph Reis](https://github.com/JosephReis646), [Tatiana Castro](https://github.com/tatys5394), [Jared Andreassi](https://github.com/jAndreassi)
+
+Third-party assets:
 
 If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
 
