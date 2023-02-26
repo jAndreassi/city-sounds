@@ -94,7 +94,7 @@ width: 50px;
 }
 
 .navbar-brand {
-    background-color: rgb(241, 244, 246);
+    background-color: rgb(235, 242, 247);
     display: flex;
     justify-content: space-between;
     width: 100vw; /* need to classify width to stop bulma responsiveness from breaking the flex */
