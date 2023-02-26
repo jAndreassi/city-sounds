@@ -155,7 +155,7 @@ function fetchAndRenderPlaylist(searchValue) {
         tdName.innerHTML = `${songName}`
         tdLength.innerHTML = `${songLength}`
         tdArtist.innerHTML = `${songArtist}`
-        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-headphones"></i></a>`
+        tdLink.innerHTML = `<a href="${songLink}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-headphones-simple"></i></a>`
        
 
         playlistChart.appendChild(tr);
