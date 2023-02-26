@@ -10,7 +10,11 @@
 
 ## Description
 
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
+CitySounds allows people to search by country for the top ten songs in 69 nations with a sleek, easy to navigate user interface. 
+
+Our team's motivation for creating this application was to apply a culmination of our knowledge thus far in our bootcamp. That includes HTML, CSS, JavaScript, third-party APIs, and most recently, Git. 
+
+In the beginning, our goal was to create an impressive end product that we could realistically use and be proud to display in our portfolios. Walking through the process of brainstorming, planning, and developing our app was important in our decidion making process. We decided that it was much better to deliver a polished MVP that we could knowingly develop given the time constraints, than overshoot our goal for the time and resources currently available to us. We gained invaluable experience working in Github collaboratively, using Git to push code made in branches, pull from the main repo, and merge pull requests to remain in sync with one another. 
 
 - What was your motivation?
 - Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
