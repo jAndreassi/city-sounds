@@ -12,6 +12,21 @@
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/css/selectize.default.min.css"
+      integrity="sha512-pTaEn+6gF1IeWv3W1+7X7eM60TFu/agjgoHmYhAfLEU8Phuf6JKiiE8YmsNC0aCgQv4192s4Vai8YZ6VNM6vyQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.15.2/js/selectize.min.js"
+      integrity="sha512-IOebNkvA/HZjMM7MxL0NYeLYEalloZ8ckak+NDtOViP7oiYzG5vn6WVXyrJDiJPhl4yRdmNAG49iuLmhkUdVsQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     
     <!-- Load fonts here -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,7 +69,10 @@
           <section class="navbar-right">
             <div class="field has-addons">
               <div class="control">
-                <input class="input search-bar is-rounded" type="text" placeholder="Find song by country" list="countryList"> <datalist id="countryList"></datalist>
+                <input class="input search-bar is-rounded" type="text" placeholder="Find song by country" list="countryList"></input>
+                <datalist id="countryList">
+                  <!-- <option>usa</option> -->
+                </datalist>
               </div>
               <div class="control">
                 <a class="button submit-btn is-rounded is-info">
@@ -108,6 +126,7 @@
         <!-- or embedded music player -->
       </section>
     </main>
+
 
     <!-- Add additional js libraries here  -->
     <!-- map only works without deezer library -->

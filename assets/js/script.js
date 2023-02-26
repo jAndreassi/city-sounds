@@ -43,30 +43,30 @@ function searchCountry(searchValue) {
   mapZoom(latLonObj.lat, latLonObj.lon);
 }
 
-var searchBar = document.querySelector(".search-bar");
-var countryList = document.getElementById("countryList");
+// var searchBar = document.querySelector(".search-bar");
+// var countryList = document.getElementById("countryList");
 
-// // set datalist to searchBar
-searchBar.setAttribute("list", "countryList");
+// // // set datalist to searchBar
+// searchBar.setAttribute("list", "countryList");
 
-// add event listener to search bar for input
-searchBar.addEventListener("input", function(event) {
-  var searchValue = event.target.value.trim().toLowerCase();
-  if (searchValue.length >= 3) {
-    // filter countries by search value
-    var filteredCountries = countryArr.filter(function(country) {
-      return country.toLowerCase().startsWith(searchValue);
-    });
-    countryList.innerHTML = "";
-    filteredCountries.forEach(function(country) {
-      var option = document.createElement("option");
-      option.value = country;
-      countryList.appendChild(option);
-    });
-  } else {
-    countryList.innerHTML = "";
-  }
-});
+// // add event listener to search bar for input
+// searchBar.addEventListener("input", function(event) {
+//   var searchValue = event.target.value.trim().toLowerCase();
+//   if (searchValue.length >= 3) {
+//     // filter countries by search value
+//     var filteredCountries = countryArr.filter(function(country) {
+//       return country.toLowerCase().startsWith(searchValue);
+//     });
+//     countryList.innerHTML = "";
+//     filteredCountries.forEach(function(country) {
+//       var option = document.createElement("option");
+//       option.value = country;
+//       countryList.appendChild(option);
+//     });
+//   } else {
+//     countryList.innerHTML = "";
+//   }
+// });
 
 // submit button event listener for Enter
 searchBar.addEventListener("keydown", function(event) {
@@ -398,7 +398,31 @@ function loadMap() {
   });
 }
 
-
+function searchOptions() {
+  generateCountryArrays();
+  // var searchOptionsIdArr = [];
+  // for (let i = 1; i < countryArr.length; i++) {
+  //   searchOptionsIdArr.push(i)
+  // }
+  // console.log(searchOptionsIdArr)
+  var searchOptionsArr = [];
+  for (let i = 0; i < countryArr.length; i++) {
+    var searchOptionObj = countryArr[i];
+    searchOptionsArr.push(searchOptionObj);
+  }
+  console.log(searchOptionsArr)
+  var items = searchOptionsArr.map(function(x) { return { title: x }; });
+  $input = $('.search-bar').selectize({
+    maxItems: 1,
+    valueField: 'title',
+    labelField: 'title',
+    searchField: 'title',
+    options: items,
+    create: false
+  });
+}
+searchOptions()
+        
   
   // USER INTERACTIONS
     // search bar – event listener

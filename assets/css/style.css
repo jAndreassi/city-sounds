@@ -130,6 +130,78 @@ td:hover {
     text-overflow:initial;
 }
 
+/* SELECTIZE STYLING */
+
+.selectize-input {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+    /* margin-left: -8px; */
+}
+
+.selectize-input.focus {
+    box-shadow: none;
+}
+
+.selectize-control.multi .selectize-input div {
+    background: transparent;
+    color: black;
+    border: none;
+}
+
+.selectize-control.multi .selectize-input [data-value]{
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+.selectize-control.single .selectize-input {
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+}
+
+.selectize-control.single .selectize-input.dropdown-active:after {
+    display: none;
+}
+
+.selectize-control.single .selectize-input:after {
+    display: none;
+}
+
+div.option.selected.active {
+    background-color: white;
+    color: black;
+}
+
+div.option.selected {
+    background-color: white;
+    color: black;
+}
+
+div.option.selected.active:hover {
+    background-color: white;
+    color: black;
+}
+
+.selectize-control.single .selectize-input.input-active, .selectize-input {
+    background: transparent;
+}
+
+
+.input {
+    height: auto;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    width: 25vw;
+}
+
+.input.is-rounded {
+    border-radius: 0px;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
 @media (max-width: 575px) {
     .text {
         display: none;
