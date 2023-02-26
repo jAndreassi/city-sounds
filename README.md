@@ -35,9 +35,9 @@ Find each group member's github link below:
 
 Third-party assets:
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
+We used [Deezer's API](https://developers.deezer.com/) to access the top ten songs in each country. Deezer requires a login to view API information. 
+We used [ArcGIS Maps](https://developers.arcgis.com/javascript/latest/) to read documentation on how to implement the map. 
+The [ArcGIS map view](https://developers.arcgis.com/javascript/latest/api-reference/esri-views-MapView.html) feature allowed our team to display an interactive globe on the webpage.
 
 ## License
 
