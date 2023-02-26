@@ -1,10 +1,12 @@
 /* css */
-html {
+html,
+body
+{
     height: 100%;
         background-image: linear-gradient(rgb(241, 244, 246), rgb(206, 230, 245), rgb(161, 186, 246));
-        opacity: 0.85;
+        background-attachment: fixed;
 }
-body,
+
 main,
 #map-container,
 #viewDiv {
@@ -116,6 +118,7 @@ td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: navy;
 }
 
 .table td {
