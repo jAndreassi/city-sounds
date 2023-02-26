@@ -81,8 +81,9 @@ width: 50px;
     color: whitesmoke;
 }
 
-.hover-effect:hover img {
-    filter: invert(1);
+.hover-effect:hover i {
+    /* filter: invert(1); */
+    color: whitesmoke
 }
 
 .dropdown {
