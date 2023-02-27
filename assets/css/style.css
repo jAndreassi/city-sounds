@@ -1,6 +1,12 @@
 /* css */
 html,
-body,
+body
+{
+    height: 100%;
+        background-image: linear-gradient(rgb(241, 244, 246), rgb(206, 230, 245), rgb(161, 186, 246));
+        background-attachment: fixed;
+}
+
 main,
 #map-container,
 #viewDiv {
@@ -81,8 +87,9 @@ width: 50px;
     color: whitesmoke;
 }
 
-.hover-effect:hover img {
-    filter: invert(1);
+.hover-effect:hover i {
+    /* filter: invert(1); */
+    color: whitesmoke
 }
 
 .dropdown {
@@ -90,6 +97,7 @@ width: 50px;
 }
 
 .navbar-brand {
+    background-color: rgb(235, 242, 247);
     display: flex;
     justify-content: space-between;
     width: 100vw; /* need to classify width to stop bulma responsiveness from breaking the flex */
@@ -111,6 +119,7 @@ td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: navy;
 }
 
 .table td {
@@ -126,8 +135,12 @@ tr {
 }
 
 td:hover {
-    /* overflow: scroll; */
+    overflow: auto;
     text-overflow:initial;
+}
+
+td:hover::-webkit-scrollbar {
+    display: none;
 }
 
 @media (max-width: 575px) {
