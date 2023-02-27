@@ -1,6 +1,3 @@
-// DEPENDENCIES (DOM Elements)
-// DATA / STATE / GLOBAL VARIABLES
-
 // FUNCTIONS
 
 var searchBar = document.querySelector(".search-bar");
@@ -73,7 +70,6 @@ searchBar.addEventListener("keydown", function(event) {
     var searchValue = event.target.value.trim();
     searchCountry(searchValue);
   }
- 
 });
 
 // submit button eventlistener for click
@@ -382,15 +378,3 @@ function loadMap() {
     }
   });
 }
-
-
-  
-  // USER INTERACTIONS
-    // search bar – event listener
-    // recent searches – event listener
-  
-  
-  // INITIALIZATION
-    // on page load map appears and form appears
-    // once local storage, recent searches appears
-    // Chart appears on searech (map zoom)
