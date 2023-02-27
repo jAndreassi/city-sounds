@@ -57,6 +57,16 @@ h1 {
 
 .table {
     margin: auto;
+    background-color: transparent;
+    margin-bottom: 100px;
+}
+
+.table th {
+    border-color: black;
+}
+
+.table td {
+    border-color: black;
 }
 
 .dropdown-trigger .button {
@@ -101,6 +111,10 @@ width: 50px;
     display: flex;
     justify-content: space-between;
     width: 100vw; /* need to classify width to stop bulma responsiveness from breaking the flex */
+}
+
+.navbar {
+    box-shadow: none;
 }
 
 .navbar-right {
