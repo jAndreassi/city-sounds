@@ -37,7 +37,6 @@ function searchCountry(searchValue) {
 
   // gets latitude and longitude for queried countries
   var latLonObj = getLatAndLon(searchValue);
-  console.log(latLonObj);
 
   // move Map to queried country
   mapZoom(latLonObj.lat, latLonObj.lon);
@@ -104,7 +103,6 @@ function fetchAndRenderPlaylist(searchValue) {
       return response.json();
     })
     .then(function(data) {
-      console.log(data);
       var playlistChart = document.querySelector("#deezer-songs");
 
       var thead = document.querySelector(".playlist-header");
@@ -122,15 +120,10 @@ function fetchAndRenderPlaylist(searchValue) {
         var songDuration = data.tracks.data[i].duration;
         var songArtist = data.tracks.data[i].artist.name;
         var songLink = data.tracks.data[i].link;
-        console.log(songName);
-        console.log(songDuration);
-        console.log(songArtist);
-        console.log(songLink);
         var minutes = Math.floor(songDuration / 60).toString();
         var rawSeconds = songDuration % 60;
         var seconds = rawSeconds.toString().padStart(2, '0');
         var songLength = `${minutes}:${seconds}`;
-        console.log(songLength);
 
         // if statement to check if playlist chart needs to be erased on first iteration
         if (playlistChart.innerHTML.trim() !== "" && i === 0) {
@@ -184,7 +177,6 @@ function updateRecentSearches() {
   var recentSearchesLimited = recentSearches.slice(0, 5);
   for (let i = 0; i < recentSearchesLimited.length; i++) {
     var recentSearch = recentSearchesLimited[i];
-    console.log(link)
     var link = document.createElement('a');
     link.classList.add('dropdown-item');
     link.textContent = recentSearch;
@@ -202,8 +194,6 @@ dropdown.addEventListener("click", function () {
 var dropdownContent = document.querySelector(".dropdown-content");
 dropdownContent.addEventListener("click", function (event) {
   var searchValue = event.target.textContent;
-  console.log(event.target);
-  console.log(searchValue);
   searchBar.value = searchValue;
   searchCountry(searchValue);
   });
@@ -257,21 +247,17 @@ function generateCountryArrays() {
       countryArr.push(name.substring(4));
     }
   }
-  console.log(countryArr);
   // makes the array of objects that pairs country and id
   for (let z = 0; z < countryArr.length; z++) {
     var countryIdObj = {"country": countryArr[z], "id": playlistId[z]};
     countryIdArr.push(countryIdObj);
   }
-  console.log(countryIdArr);
 }
 
 // gets individual lat and lons as numbers
 function getLatAndLon(searchValue) {
   lat = Number(countryData[searchValue].lat);
   lon = Number(countryData[searchValue].lon);
-  console.log(lat);
-  console.log(lon);
   return {lat, lon} 
 }
 
@@ -286,7 +272,6 @@ function mapMarkers() {
     let countryObj = {lat, lon, name}
     countryObjArr.push(countryObj);
   }
-  console.log(countryObjArr);
 }
 
 
