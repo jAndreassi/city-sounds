@@ -108,10 +108,10 @@ function fetchAndRenderPlaylist(searchValue) {
       var thead = document.querySelector(".playlist-header");
       thead.innerHTML = 
       `<tr>
-        <th>Song</th>
-        <th>Duration</th>
-        <th>Artist</th>
-        <th>Link</th>
+        <th class="has-text-left">Song</th>
+        <th class="has-text-left">Duration</th>
+        <th class="has-text-left">Artist</th>
+        <th class="has-text-left">Link</th>
       </tr>`
       
       // for loop to pull top 10 song track info
@@ -138,13 +138,13 @@ function fetchAndRenderPlaylist(searchValue) {
         var tr = document.createElement("tr");
         tr.setAttribute("class", "hover-effect");
         var tdName = document.createElement("td");
-        tdName.setAttribute("class", "song-name");
+        tdName.setAttribute("class", "song-name has-text-left");
         var tdLength = document.createElement("td");
-        tdLength.setAttribute("class", "song-duration");
+        tdLength.setAttribute("class", "song-duration has-text-left");
         var tdArtist = document.createElement("td");
-        tdArtist.setAttribute("class", "song-artist");
+        tdArtist.setAttribute("class", "song-artist has-text-left");
         var tdLink = document.createElement("td");
-        tdLink.setAttribute("class", "song-link");
+        tdLink.setAttribute("class", "song-link has-text-centered");
         
         tdName.innerHTML = `${songName}`
         tdLength.innerHTML = `${songLength}`
