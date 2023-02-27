@@ -92,6 +92,10 @@ width: 50px;
 
 }
 
+.hover-effect {
+    color:navy;
+}
+
 .hover-effect:hover {
     background-color: #898989;
     color: whitesmoke;
@@ -133,7 +137,6 @@ td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    color: navy;
 }
 
 .table td {
